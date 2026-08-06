@@ -225,7 +225,7 @@ button {
   align-items: flex-start;
   justify-content: flex-start;
   /* 양끝 배치가 아닌, 왼쪽부터 차례대로 배치하도록 변경 */
-  gap: 170px;
+  gap: 180px;
   /* 이미지(좌)와 텍스트(우) 사이의 거리를 정확히 170px로 고정! */
 }
 
@@ -240,8 +240,8 @@ button {
 .curation-right {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 535px;
+  gap: 136px;
+  height: 600px;
 }
 
 /* 큐레이션 이미지 섹션 */

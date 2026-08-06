@@ -76,18 +76,6 @@
   opacity: 0.95;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.hero-actions .btn-outline {
-  border-color: #fff;
-  color: #fff;
-}
-
 .hero-actions .btn-outline:hover {
   background: #fff;
   color: var(--ink);
@@ -106,6 +94,7 @@
 .ba-wrap {
   position: relative;
   width: 100%;
+  height: 100%;
   max-width: 860px;
   margin: 0 auto;
   border-radius: 20px;
@@ -113,7 +102,6 @@
   box-shadow: var(--shadow);
   user-select: none;
   touch-action: pan-y;
-  aspect-ratio: 3 / 2;
   background: #ddd6cb;
 }
 
@@ -262,7 +250,7 @@
   width: 400px;
   height: 500px;
   object-fit: cover;
-  object-position: bottom;
+  object-position: center;
   /* 자르는 기준점을 맨 밑바닥으로 내립니다 */
 }
 
@@ -278,6 +266,36 @@
 .marquee-card .mc-meta {
   color: var(--muted);
   font-size: 12px;
+}
+
+/* 2) 인라인 스타일 대체를 위한 새로운 클래스 추가 (파일 하단에 추가) */
+.more-link-wrapper {
+  text-align: right;
+  font-size: 24px;
+  margin-right: 140px;
+}
+
+/* 갤러리 섹션의 더보기 링크 전용 여백 */
+.more-link-wrapper.gallery-link {
+  margin-top: 30px;
+  margin-bottom: -25px;
+}
+
+/* 3) 모바일/태블릿 등 작은 화면을 위한 반응형 적용 (파일 맨 아래 추가) */
+@media (max-width: 900px) {
+  .more-link-wrapper {
+    margin-right: 0;
+    /* 우측 여백 제거 */
+    text-align: center;
+    /* 모바일에서는 가운데 정렬이 더 깔끔함 */
+    font-size: 20px;
+    /* 폰트 크기 살짝 축소 */
+  }
+
+  .more-link-wrapper.gallery-link {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
 }
 
 /* ============================================================

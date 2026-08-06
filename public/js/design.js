@@ -16,27 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
 // ---------------------------------------------------------------
 // 1) 탭 전환 - 빈 방 꾸미기 / 평면도 3D
 // ---------------------------------------------------------------
-function initTabs() {
-  const tabs = document.querySelectorAll('.tab');
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach((t) => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentType = tab.dataset.type;
+// function initTabs() {
+//   const tabs = document.querySelectorAll('.tab');
+//   tabs.forEach((tab) => {
+//     tab.addEventListener('click', () => {
+//       tabs.forEach((t) => t.classList.remove('active'));
+//       tab.classList.add('active');
+//       currentType = tab.dataset.type;
 
-      // 탭에 맞게 설명 글자 바꾸기
-      const panelTitle = document.getElementById('panelTitle');
-      panelTitle.textContent = currentType === 'decor' ? '1. 빈 방 사진 올리기' : '1. 평면도 이미지 올리기';
-      const prompt = document.getElementById('prompt');
-      prompt.placeholder = currentType === 'decor'
-        ? '예) 7평 원룸, 미니멀 스타일로 꾸며줘\n예) 빈티지 감성의 거실, 따뜻한 조명'
-        : '예) 아늑한 2룸, 밝은 분위기\n예) 모던한 스튜디오, 화이트 톤';
-      // 결과 영역 초기화
-      document.getElementById('resultArea').innerHTML =
-        '<p class="result-empty">탭이 바뀌었어요. 다시 생성해 보세요.</p>';
-    });
-  });
-}
+//       // 탭에 맞게 설명 글자 바꾸기
+//       const panelTitle = document.getElementById('panelTitle');
+//       panelTitle.textContent = currentType === 'decor' ? '1. 빈 방 사진 올리기' : '1. 평면도 이미지 올리기';
+//       const prompt = document.getElementById('prompt');
+//       prompt.placeholder = currentType === 'decor'
+//         ? '예) 7평 원룸, 미니멀 스타일로 꾸며줘\n예) 빈티지 감성의 거실, 따뜻한 조명'
+//         : '예) 아늑한 2룸, 밝은 분위기\n예) 모던한 스튜디오, 화이트 톤';
+//       // 결과 영역 초기화
+//       document.getElementById('resultArea').innerHTML =
+//         '<p class="result-empty">탭이 바뀌었어요. 다시 생성해 보세요.</p>';
+//     });
+//   });
+// }
 
 // ---------------------------------------------------------------
 // 2) 이미지 업로드 - 클릭/드래그로 파일 선택, 미리보기 표시
@@ -127,45 +127,45 @@ function initChips() {
 // ---------------------------------------------------------------
 // 4) AI 생성 요청
 // ---------------------------------------------------------------
-function initGenerate() {
-  const btn = document.getElementById('generateBtn');
-  btn.addEventListener('click', async () => {
-    const error = document.getElementById('formError');
-    error.textContent = '';
+// function initGenerate() {
+//   const btn = document.getElementById('generateBtn');
+//   btn.addEventListener('click', async () => {
+//     const error = document.getElementById('formError');
+//     error.textContent = '';
 
-    // 로그인 확인
-    const user = await requireLogin();
-    if (!user) return;
+//     // 로그인 확인
+//     const user = await requireLogin();
+//     if (!user) return;
 
-    const prompt = document.getElementById('prompt').value.trim();
-    if (!selectedFile) { error.textContent = '이미지를 먼저 올려주세요.'; return; }
-    if (!prompt) { error.textContent = '원하는 분위기를 적어주세요.'; return; }
+//     const prompt = document.getElementById('prompt').value.trim();
+//     if (!selectedFile) { error.textContent = '이미지를 먼저 올려주세요.'; return; }
+//     if (!prompt) { error.textContent = '원하는 분위기를 적어주세요.'; return; }
 
-    // 로딩 화면 보여주기
-    setLoading(true);
+//     // 로딩 화면 보여주기
+//     setLoading(true);
 
-    try {
-      const form = new FormData();
-      form.append('image', selectedFile);
-      form.append('prompt', prompt);
+//     try {
+//       const form = new FormData();
+//       form.append('image', selectedFile);
+//       form.append('prompt', prompt);
 
-      const result = await api(currentType === 'decor' ? '/ai/decor' : '/ai/floorplan', {
-        method: 'POST',
-        body: form,
-      });
+//       const result = await api(currentType === 'decor' ? '/ai/decor' : '/ai/floorplan', {
+//         method: 'POST',
+//         body: form,
+//       });
 
-      // 결과 화면 그리기
-      if (currentType === 'decor') renderDecorResult(result, prompt);
-      else renderFloorplanResult(result, prompt);
-    } catch (err) {
-      showToast(err.message, 3500);
-      document.getElementById('resultArea').innerHTML =
-        '<p class="result-empty">생성에 실패했어요. 조금 후에 다시 시도해 주세요.</p>';
-    } finally {
-      setLoading(false);
-    }
-  });
-}
+//       // 결과 화면 그리기
+//       if (currentType === 'decor') renderDecorResult(result, prompt);
+//       else renderFloorplanResult(result, prompt);
+//     } catch (err) {
+//       showToast(err.message, 3500);
+//       document.getElementById('resultArea').innerHTML =
+//         '<p class="result-empty">생성에 실패했어요. 조금 후에 다시 시도해 주세요.</p>';
+//     } finally {
+//       setLoading(false);
+//     }
+//   });
+// }
 
 // 로딩 상태 표시/해제
 function setLoading(on) {
