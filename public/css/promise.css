@@ -1,0 +1,76 @@
+/* 이용약관 전용 스타일 */
+.terms-wrapper {
+    background-color: var(--bg);
+    padding: 80px 20px;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    margin: 0 140px;
+}
+
+.terms-container {
+    max-width: 1600px;
+}
+
+.terms-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-top: 154px;
+    color: var(--primary-mid);
+    margin-bottom: 60px;
+}
+
+.terms-section {
+    margin-bottom: 40px;
+}
+
+.terms-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+}
+
+.terms-section p {
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 800;
+    color: var(--primary-mid);
+    word-break: keep-all;
+}
+
+/* 1. 2. 등의 숫자로 표기되는 리스트 */
+.terms-section ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+    margin-bottom: 16px;
+    color: var(--primary-mid);
+}
+
+.terms-section ol>li {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--primary-mid);
+    word-break: keep-all;
+}
+
+/* 숫자 안쪽의 하위 불릿 리스트 */
+.terms-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 6px;
+    margin-bottom: 0;
+    color: var(--primary-mid);
+}
+
+.terms-section ul>li {
+    font-size: 24px;
+    margin-bottom: 4px;
+    color: var(--primary-mid);
+    word-break: keep-all;
+}
+
+.terms-section.addendum h2 {
+    font-size: 32px;
+    margin-top: 50px;
+}

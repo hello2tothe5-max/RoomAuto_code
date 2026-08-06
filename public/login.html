@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 - RoomAuto</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+
+  <main class="auth-main">
+    <div class="auth-card fade-up visible">
+      <h1 style="font-size: 24px;">안녕하세요</h1>
+      <p class="auth-sub" style="color: var(--primary-mid); font-size: 20px;">간단한 회원가입으로 인테리어 추천 받기</p>
+
+      <!-- 에러 메시지 표시용 (URL에 ?error= 가 있을 때 auth.js가 사용) -->
+      <p class="form-error" id="formError" style="margin-bottom: 15px; text-align: center;"></p>
+      <div class="social-btns">
+        <a class="social-btn" href="/auth/google" target="_top">
+          <img src="./images/flat-color-icons_google.png" width="24px" height="24px" class="g-logo"> 구글 로그인
+        </a>
+        <a class="social-btn" href="/auth/github" target="_top">
+          <img src="./images/github.png" width="24px" height="24px" class="gh-logo"> 깃허브 로그인
+        </a>
+      </div>
+    </div>
+
+    <!-- <p class="auth-foot">
+        아직 계정이 없나요? <a href="register.html">회원가입</a>
+      </p> -->
+
+    <!-- <div class="demo-box">
+        데모 계정으로 바로 시도: <strong>demo@roomauto.com</strong> / 비밀번호 <strong>1234</strong>
+      </div>
+    </div> -->
+  </main>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+
+</html>

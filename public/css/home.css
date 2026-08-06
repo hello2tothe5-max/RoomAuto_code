@@ -1,0 +1,444 @@
+/* ============================================================
+   home.css - 메인 페이지(index.html) 전용 스타일
+   히어로 영상, 비포&애프터 슬라이더, 무한 갤러리, 리뷰
+   ============================================================ */
+
+/* ---------- 히어로 섹션 ---------- */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+
+.hero video,
+.hero .hero-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* 영상이 못 뜨면 포스터 이미지가 천천히 확대되는 효과(켄번즈) */
+.hero .hero-poster {
+  animation: kenburns 18s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.12);
+  }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 16, 12, 0.35), rgba(20, 16, 12, 0.65));
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 20px;
+  max-width: 720px;
+}
+
+.hero-eyebrow {
+  letter-spacing: 3px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f2d9a6;
+  margin-bottom: 14px;
+}
+
+.hero-content h1 {
+  font-size: clamp(44px, 8vw, 84px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1.1;
+}
+
+.hero-content .sub {
+  font-size: clamp(16px, 2.4vw, 22px);
+  margin: 18px auto 32px;
+  opacity: 0.95;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-actions .btn-outline {
+  border-color: #fff;
+  color: #fff;
+}
+
+.hero-actions .btn-outline:hover {
+  background: #fff;
+  color: var(--ink);
+}
+
+/* ---------- 공통 섹션 ---------- */
+.section {
+  padding: 88px 0;
+}
+
+.section.alt {
+  background: #F3E4C9;
+}
+
+/* ---------- 비포 & 애프터 슬라이더 ---------- */
+.ba-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  user-select: none;
+  touch-action: pan-y;
+  aspect-ratio: 3 / 2;
+  background: #ddd6cb;
+}
+
+.ba-img {
+  position: absolute;
+  inset: 0;
+}
+
+.ba-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 위에 얹힌 AFTER 사진은 손잡이 왼쪽만 보이도록 자르기 */
+.ba-before {
+  clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0);
+}
+
+.ba-after {
+  clip-path: inset(0 0 0 var(--pos, 50%));
+}
+
+.ba-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos, 50%);
+  width: 3px;
+  background: #fff;
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  z-index: 5;
+}
+
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--primary-dark);
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+}
+
+.ba-label {
+  position: absolute;
+  top: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(20, 16, 12, 0.6);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 4;
+}
+
+.ba-label.before {
+  left: 16px;
+}
+
+.ba-label.after {
+  right: 16px;
+}
+
+.ba-note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 18px;
+}
+
+.ba-note strong {
+  color: var(--primary);
+}
+
+/* ---------- 무한 갤러리 슬라이더(마퀴) ---------- */
+.marquee {
+  overflow: hidden;
+  position: relative;
+  padding: 8px 0;
+  margin-bottom: 22px;
+}
+
+.marquee::before,
+.marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg), transparent);
+}
+
+.marquee::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--bg), transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-card {
+  flex: 0 0 auto;
+  width: 400px;
+  height: 500px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.marquee-card img {
+  width: 400px;
+  height: 500px;
+  object-fit: cover;
+  object-position: bottom;
+  /* 자르는 기준점을 맨 밑바닥으로 내립니다 */
+}
+
+.marquee-card .mc-body {
+  padding: 12px 14px;
+}
+
+.marquee-card .mc-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.marquee-card .mc-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ============================================================
+   고정형 리뷰 카드 스타일 (이미지 좌측, 텍스트 우측)
+   ============================================================ */
+
+.rfc-avatar {
+  width: 80px;
+  /* 아바타 가로 크기 */
+  height: 80px;
+  /* 아바타 세로 크기 */
+  border-radius: 50%;
+  /* 완벽한 원형으로 깎기 */
+  object-fit: cover;
+  /* 이미지가 찌그러지지 않게 꽉 채우기 */
+  background-color: var(--accent-mid);
+  /* 사진이 없을 때 보여질 기본 베이지색 배경 */
+  flex-shrink: 0;
+}
+
+.review-fixed-card {
+  width: 1400px;
+  height: 650px;
+  background: var(--accent-mid);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  /* 카드와 카드 사이의 상하 간격 (벌어짐) */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 80px 90px 80px 70px;
+  /* 카드 내부 여백 */
+  display: flex;
+  flex-direction: row;
+  /* ★ 이미지 좌측, 텍스트 우측 나란히 배치 */
+  gap: 40px;
+  /* 좌측 이미지와 우측 텍스트 사이의 간격 */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* 좌측 이미지 영역 */
+.rfc-left {
+  flex-shrink: 0;
+  /* 사진이 찌그러지는 것을 방지 */
+}
+
+.rfc-img {
+  width: 400px;
+  /* 이미지 너비 */
+  height: 500px;
+  /* 이미지 높이 */
+  object-fit: cover;
+  /* 비율 유지하며 꽉 차게 */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 우측 텍스트 영역 */
+.rfc-right {
+  margin: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 텍스트를 위아래 기준 중앙에 예쁘게 배치 */
+  flex-grow: 1;
+  /* 남은 우측 공간을 텍스트가 모두 차지함 */
+}
+
+/* 텍스트 세부 디자인 */
+.rfc-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+
+  /* 만약 이미지처럼 전체를 가로지르는 긴 밑줄을 넣고 싶다면 아래 속성을 사용하세요 */
+  border-bottom: 2px solid var(--primary-mid);
+  padding-bottom: 12px;
+  /* 밑줄과 텍스트 사이의 여백 */
+}
+
+.rfc-name {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* 리뷰 게시 날짜 스타일 */
+.rfc-date {
+  font-size: 18px;
+  color: var(--primary-mid);
+  /* 기본 폰트 남색 */
+  margin-left: auto;
+  /* 날짜를 우측 끝으로 쭉 밀어서 정렬 */
+  font-weight: 500;
+}
+
+.rfc-stars {
+  font-size: 25px;
+}
+
+.rfc-title {
+  font-size: 32px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  color: var(--primary-mid);
+  /* 룸오토의 남색 포인트 컬러 적용 */
+}
+
+.rfc-content {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.7;
+  color: var(--primary-mid);
+  opacity: 0.8;
+}
+
+/* 우측 텍스트 정보 전체를 감싸는 영역 */
+.rfc-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* 우측 빈 공간을 모두 차지하도록 설정 */
+  gap: 1px;
+  /* 이름과 별점 사이의 위아래 간격 */
+}
+
+/* 별점과 날짜가 들어가는 가로 영역 */
+.rfc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 별점을 왼쪽, 날짜를 오른쪽 끝으로 밀어냅니다 */
+}
+
+/* ---------- 링크 더보기 ---------- */
+.more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-top: 28px;
+}
+
+.more-link:hover {
+  text-decoration: underline;
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .marquee-card {
+    width: 220px;
+  }
+
+  .marquee-card img {
+    width: 220px;
+    height: 160px;
+  }
+}

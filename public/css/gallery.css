@@ -1,0 +1,83 @@
+/* ============================================================
+   gallery.css - 갤러리 목록/상세 페이지 전용 스타일
+   ============================================================ */
+
+/* ---------- 필터 바 ---------- */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.filter-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.filter-line .f-label { font-weight: 700; font-size: 14px; color: var(--muted); }
+.filter-search { max-width: 260px; }
+
+/* ---------- 갤러리 카드 ---------- */
+.gallery-card-wrap {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.gallery-card-wrap:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(43, 38, 34, 0.12); }
+.gallery-card { flex: 1; display: flex; flex-direction: column; box-shadow: none; border-radius: 0; }
+.gallery-card:hover { transform: none; box-shadow: none; }
+.gallery-card .card-img { aspect-ratio: 4 / 3; }
+.gallery-card .card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px 14px;
+  border-top: 1px solid var(--line);
+}
+.gallery-card .card-actions .icon-btn { flex: 1; justify-content: center; }
+
+.card-top {
+  position: relative;
+}
+.card-top .badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* ---------- 상세 페이지 ---------- */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .detail-layout { grid-template-columns: 1fr; }
+}
+
+.detail-img {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #ece5da;
+  position: sticky;
+  top: calc(var(--nav-h) + 20px);
+}
+.detail-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+@media (max-width: 900px) { .detail-img { position: static; } }
+
+.detail-info .d-title { font-size: 26px; font-weight: 800; }
+.detail-info .d-meta { color: var(--muted); margin: 8px 0 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+.detail-info .d-desc { color: var(--ink); line-height: 1.8; margin-bottom: 20px; }
+.detail-info .d-actions { display: flex; gap: 10px; margin-bottom: 26px; flex-wrap: wrap; }
+
+.detail-divider { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
+
+.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 900px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
+.related-item { border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+.related-item img { aspect-ratio: 4 / 3; object-fit: cover; }
+.related-item .rel-body { padding: 10px 12px; font-size: 13px; font-weight: 700; }

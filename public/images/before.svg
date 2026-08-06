@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ddd6cb"/>
+      <stop offset="100%" stop-color="#c9c1b4"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b5ab9a"/>
+      <stop offset="100%" stop-color="#94897a"/>
+    </linearGradient>
+  </defs>
+  <!-- 벽 -->
+  <rect width="1200" height="520" fill="url(#wall)"/>
+  <!-- 바닥 -->
+  <rect y="520" width="1200" height="280" fill="url(#floor)"/>
+  <rect y="520" width="1200" height="6" fill="#a89e8d"/>
+  <!-- 창문 -->
+  <rect x="470" y="140" width="260" height="240" rx="8" fill="#eef3f6" stroke="#a89e8d" stroke-width="10"/>
+  <line x1="600" y1="140" x2="600" y2="380" stroke="#a89e8d" stroke-width="10"/>
+  <line x1="470" y1="260" x2="730" y2="260" stroke="#a89e8d" stroke-width="10"/>
+  <!-- 빈 공간 표시(물음표) -->
+  <circle cx="860" cy="330" r="90" fill="rgba(255,255,255,0.35)"/>
+  <text x="860" y="365" text-anchor="middle" font-family="Arial" font-size="110" fill="rgba(120,110,100,0.55)">?</text>
+  <text x="600" y="700" text-anchor="middle" font-family="Arial" font-size="34" fill="rgba(80,74,66,0.8)" font-weight="bold">BEFORE · 빈 방</text>
+  <text x="600" y="745" text-anchor="middle" font-family="Arial" font-size="22" fill="rgba(80,74,66,0.6)">아직 가구가 없는 텅 빈 공간</text>
+</svg>

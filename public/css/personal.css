@@ -1,0 +1,78 @@
+/* 개인정보 처리방침 스타일 */
+.privacy-wrapper {
+    background-color: var(--bg);
+    /* 이미지의 배경색상과 유사한 연한 베이지톤 */
+    padding: 80px 20px;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+}
+
+.privacy-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 140px;
+}
+
+.privacy-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-top: 154px;
+    color: var(--primary-mid);
+    /* 진한 네이비(남색) 색상 */
+    margin-bottom: 60px;
+    margin-left: calc(-50vw + 50% + 140px);
+}
+
+.privacy-preamble {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-top: 150px;
+    margin-bottom: 50px;
+    word-break: keep-all;
+    line-height: 1.5;
+}
+
+.privacy-section {
+    margin-bottom: 40px;
+}
+
+.privacy-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+}
+
+.privacy-section p {
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: var(--primary-mid);
+    word-break: keep-all;
+}
+
+.privacy-section ul {
+    list-style-type: disc;
+    padding-left: 24px;
+    margin-bottom: 16px;
+    color: var(--primary-mid);
+}
+
+.privacy-section li {
+    font-size: 24px;
+    margin-bottom: 6px;
+    color: var(--primary-mid);
+    word-break: keep-all;
+}
+
+.privacy-section ul ul {
+    list-style-type: disc;
+    /* 이미지처럼 하위 리스트도 원형 불릿 적용 */
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.privacy-section.addendum h2 {
+    font-size: 24px;
+    margin-top: 50px;
+}

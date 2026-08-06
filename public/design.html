@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 디자인 - RoomAuto</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/design.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+
+  <!-- ==================== 상단 내비게이션 ==================== -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="./images/roomauto-logo-navbar.png" alt="RoomAuto 로고" class="logo-mark">
+        <span class="logo-sub">RoomAuto</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">홈</a></li>
+        <li><a href="design.html" class="active">AI 디자인</a></li>
+        <li><a href="gallery.html">갤러리</a></li>
+        <li><a href="reviews.html">사용자 리뷰</a></li>
+      </ul>
+      <div class="nav-right">
+        <a class="btn btn-ghost btn-sm" href="login.html" id="start-btn">시작하기</a>
+      </div>
+      <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    </div>
+  </nav>
+
+  <!-- ==================== 본문 ==================== -->
+  <main class="page-main">
+    <div class="container">
+
+      <!-- 빵 부스러기 -->
+      <nav class="breadcrumb">
+        <a href="index.html">홈</a><span class="sep">›</span>
+        <span>AI 디자인</span>
+      </nav>
+
+      <div class="page-head fade-up">
+        <h1>AI 맞춤 공간 디자인</h1>
+        <p>빈 방 사진 또는 평면도를 올리고 원하는 분위기를 적으면 AI가 바로 만들어 줍니다.</p>
+      </div>
+      <!-- 교체할 HTML 영역 -->
+      <div class="design-grid">
+        <div class="design-content fade-up">
+
+          <!-- 1. 이미지 업로드 영역 -->
+          <div class="upload-box" id="uploadBox">
+            <div class="up-icon">
+              <img src="./images/image-plus.png" alt="이미지 추가 아이콘"
+                style="width: 48px; height: 48px; object-fit: contain;">
+            </div>
+            <div class="up-title">파일을 드래그 하거나<br> 클릭하여 업로드 하세요.<br>최대 10mb 이하의 jpeg,<br> png 첨부가능</div>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" hidden>
+          <!-- 미리보기 영역 (업로드 시 나타남) -->
+          <div class="upload-preview" id="uploadPreview">
+            <img id="previewImg" alt="선택한 이미지 미리보기">
+            <div class="file-meta">
+              <span id="fileName">파일.jpg</span>
+              <button class="remove-file" id="removeFile" type="button">삭제</button>
+            </div>
+          </div>
+        </div>
+        <!-- 3. 프롬프트 입력 및 시작 버튼 바 -->
+        <div class="prompt-bar">
+          <input type="text" class="prompt-input" id="prompt" placeholder="예) 9평 원룸, 모던 스타일">
+          <button class="btn btn-primary prompt-submit" id="generateBtn">
+            <img src="./images/ai_star.png" alt="반짝 효과 이미지" class="ai-star" style="width: 24px; height: 24px;"> 디자인 시작
+          </button>
+        </div>
+        <p class="prompt-hint">공간, 스타일 등을 입력해 보세요</p>
+
+        <p class="form-error" id="formError"></p>
+      </div>
+    </div>
+
+    <!-- 예시 필터 칩: 막막할 때 눌러서 조합하세요 -->
+    <div class="chip-label">공간 (눌러서 입력창에 더하기)</div>
+    <div class="chip-row" id="roomChips">
+      <button class="chip" data-text="원룸">원룸</button>
+      <button class="chip" data-text="투룸">투룸</button>
+      <button class="chip" data-text="오피스텔">오피스텔</button>
+      <button class="chip" data-text="오피스텔(복층)">오피스텔(복층)</button>
+    </div>
+    <div class="chip-label">스타일</div>
+    <div class="chip-row" id="styleChips">
+      <button class="chip" data-text="미니멀">미니멀</button>
+      <button class="chip" data-text="모던">모던</button>
+      <button class="chip" data-text="빈티지">빈티지</button>
+      <button class="chip" data-text="내추럴">내추럴</button>
+    </div>
+    <p class="form-error" id="formError"></p>
+    </div>
+  </main>
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="./images/roomauto-logo-footer.png" alt="RoomAuto 푸터 로고" class="footer-logo">
+            <strong class="footer-name">RoomAuto</strong>
+          </a>
+        </div>
+        <div class="footer-links">
+          <a href="personal.html">개인정보처리방침</a>
+          <a href="promise.html">웹사이트 이용약관</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 RoomAuto(KLHYK). All Right Reserved</p>
+      </div>
+    </div>
+  </footer>
+  <!-- ==================== 로그인 모달 ==================== -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="close-modal-btn" class="close-btn">&times;</button>
+      <h1 style="font-size: 24px; color: var(--ink);">안녕하세요</h1>
+      <p style="color: var(--primary-mid); font-size: 20px; margin-top: 10px; margin-bottom: 12px;">
+        간단한 회원가입으로 인테리어 추천 받기
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 300px; margin: 0 auto;">
+        <a class="social-btn" href="/auth/google">
+          <img src="./images/flat-color-icons_google.png" width="24px" height="24px"> 구글 로그인
+        </a>
+        <a class="social-btn" href="/auth/github">
+          <img src="./images/github.png" width="24px" height="24px"> 깃허브 로그인
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="/js/common.js"></script>
+  <script src="/js/design.js"></script>
+</body>
+
+</html>

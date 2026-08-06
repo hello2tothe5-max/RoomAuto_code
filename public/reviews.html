@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리뷰 - RoomAuto</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/reviews.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+
+  <!-- ==================== 상단 내비게이션 ==================== -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="./images/roomauto-logo-navbar.png" alt="RoomAuto 로고" class="logo-mark">
+        <span class="logo-sub">RoomAuto</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">홈</a></li>
+        <li><a href="design.html">AI 디자인</a></li>
+        <li><a href="gallery.html">갤러리</a></li>
+        <li><a href="reviews.html" class="active">사용자 리뷰</a></li>
+      </ul>
+      <div class="nav-right">
+        <a class="btn btn-ghost btn-sm" href="login.html" id="start-btn">시작하기</a>
+      </div>
+      <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    </div>
+  </nav>
+
+  <!-- ==================== 본문 ==================== -->
+  <main class="page-main">
+    <div class="container">
+
+      <!-- 빵 부스러기 -->
+      <nav class="breadcrumb">
+        <a href="index.html">홈</a><span class="sep">›</span>
+        <span>리뷰</span>
+      </nav>
+
+      <div class="page-head fade-up">
+        <h1>사용자 리뷰</h1>
+        <p>RoomAuto를 직접 써 본 사람들의 후기를 확인해 보세요. 마음에 드는 리뷰를 눌러 자세히 볼 수 있어요.</p>
+      </div>
+
+      <!-- 리뷰 그리드 -->
+      <div class="grid" id="reviewGrid">
+        <div class="loading-box">
+          <div class="spinner"></div>
+          <p>불러오는 중...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="./images/roomauto-logo-footer.png" alt="RoomAuto 푸터 로고" class="footer-logo">
+            <strong class="footer-name">RoomAuto</strong>
+          </a>
+        </div>
+        <div class="footer-links">
+          <a href="personal.html">개인정보처리방침</a>
+          <a href="promise.html">웹사이트 이용약관</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 RoomAuto(KLHYK). All Right Reserved</p>
+      </div>
+    </div>
+  </footer>
+  <!-- ==================== 로그인 모달 ==================== -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="close-modal-btn" class="close-btn">&times;</button>
+      <h1 style="font-size: 24px; color: var(--ink);">안녕하세요</h1>
+      <p style="color: var(--primary-mid); font-size: 20px; margin-top: 10px; margin-bottom: 12px;">
+        간단한 회원가입으로 인테리어 추천 받기
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 300px; margin: 0 auto;">
+        <a class="social-btn" href="/auth/google">
+          <img src="./images/flat-color-icons_google.png" width="24px" height="24px"> 구글 로그인
+        </a>
+        <a class="social-btn" href="/auth/github">
+          <img src="./images/github.png" width="24px" height="24px"> 깃허브 로그인
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="/js/common.js"></script>
+  <script src="/js/reviews.js"></script>
+</body>
+
+</html>

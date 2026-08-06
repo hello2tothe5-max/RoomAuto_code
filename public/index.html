@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoomAuto - AI 인테리어 큐레이션</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+
+  <!-- ==================== 상단 내비게이션 ==================== -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="./images/roomauto-logo-navbar.png" alt="RoomAuto 로고" class="logo-mark">
+        <span class="logo-sub">RoomAuto</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">홈</a></li>
+        <li><a href="design.html">AI 디자인</a></li>
+        <li><a href="gallery.html">갤러리</a></li>
+        <li><a href="reviews.html">사용자 리뷰</a></li>
+      </ul>
+      <div class="nav-right">
+        <a class="btn btn-ghost btn-sm" href="login.html" id="start-btn">시작하기</a>
+        <!--        <a class="btn btn-primary btn-sm" href="register.html">회원가입</a>-->
+      </div>
+      <button class="nav-toggle" aria-label="메뉴 열기">☰</button>
+    </div>
+  </nav>
+
+  <!-- ==================== 히어로 섹션 (짧은 영상 반복 재생) ==================== -->
+  <header class="hero">
+    <!-- 짧은 인테리어 영상. autoplay + muted + loop로 계속 반복됩니다.
+         영상이 로딩되지 않는 환경에서는 포스터 이미지가 천천히 확대됩니다. -->
+    <video autoplay muted loop playsinline poster="/images/hero-poster.svg">
+      <source src="./videos/team-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <p class="hero-eyebrow">1인 가구를 위한 AI 인테리어 큐레이션</p>
+      <h1>RoomAuto</h1>
+      <p class="sub">사진 한 장으로 만드는 나만의 공간.</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== AI 인테리어 큐레이션 (비포 & 애프터) ==================== -->
+
+    <section class="section" id="curation">
+      <div class="container">
+        <!-- 좌우 배치를 위한 부모 포장 추가 -->
+        <div class="curation-flex">
+
+          <!-- [좌측 영역] 비포 & 애프터 슬라이더 -->
+          <div class="curation-left fade-up">
+            <div class="ba-wrap" id="beforeAfter">
+              <div class="ba-img ba-before">
+                <img src="/images/before.png" alt="빈 방">
+                <span class="ba-label before">BEFORE</span>
+              </div>
+              <div class="ba-img ba-after">
+                <img src="/images/after.png" alt="AI가 꾸민 방">
+                <span class="ba-label after">AFTER</span>
+              </div>
+              <div class="ba-divider">
+                <div class="ba-handle">⇄</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- [오른쪽 영역] 텍스트 + 버튼 -->
+          <div class="curation-right fade-up">
+            <p class="section-before-after"><span class="highlight">RoomAuto</span>는<br>
+              공간에 가치를 더하는<br>
+              가장 진보된 <span class="highlight">건축적 직관</span><br>
+              고객의 취향과 공간의 가능성<br>
+              인간의 감각과 AI의 정밀한<br>
+              <span class="highlight">솔루션</span>을 <span class="highlight">제공합니다.</span>
+            </p>
+            <div class="text-center" style="text-align:left;">
+              <a href="design.html" class="btn btn-primary fade-up">디자인 시작하기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 갤러리 미리보기 (무한 슬라이더) ==================== -->
+    <!-- alt= 백그라운드 색상 변경 -->
+    <section class="section alt" id="gallery-preview">
+      <div class="container">
+        <div class="section-title fade-up">
+          <!-- 1. 왼쪽 상자 (제목 부분) -->
+          <div class="title-box">
+            <!-- <p class="eyebrow">GALLERY</p> -->
+            <h2 class="">전문가의 인테리어를 얻다<br><br>AI 하나로</h2>
+          </div>
+
+          <!-- 2. 오른쪽 상자 (설명글 부분) -->
+          <div class="desc-box">
+            <p>RoomAuto와 함께 당신의 공간에 AI의 감각을 더해보세요.
+              <br><br>고민은 덜고 취향은 넣고, 데이터가 제안하는 맞춤형 인테리어.
+              <br><br>막막했던 과정도 이제 클릭 한 번이면 충분합니다.
+              <br><br>AI가 분석한 최적의 스타일과 자재 추천을 통해 시간은 아끼고,
+              <br><br>만족도는 높인 스마트한 인테리어를 경험해 보세요.
+              <br><br>시뮬레이션으로 미리 만나볼 공간들이 당신을 기다립니다.
+            </p>
+            <div
+              style="text-align:right; margin-top: 30px; margin-bottom: -25px; margin-right: 140px; font-size: 24px;">
+              <a href="gallery.html" class="more-link">사진 클릭 또는 더 살펴보기 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="marquee fade-up" id="galleryMarquee">
+        <div class="marquee-track" id="marqueeTrack"></div>
+      </div>
+      </div>
+    </section>
+
+    <!-- ==================== 리뷰 미리보기 ==================== -->
+    <section class="section" id="review-preview">
+      <div class="container">
+        <div class="section-title fade-up">
+          <!-- <p class="eyebrow">REVIEWS</p> -->
+          <h2 style="text-align: center;">우리들의 공간이 어떻게 변화했는지 확인해 보세요.<br>
+            고객님의 일상을 특별하게 만든, 정성이 담긴 실제 이야기를 소개합니다.</h2>
+        </div>
+        <div class="accordion-container" id="reviewStack">
+          <!-- JS가 리뷰를 불러와서 채워 넣습니다 -->
+        </div>
+        <div class="text-center" style="text-align:right; margin-right: 140px; font-size: 24px;">
+          <a href="reviews.html" class="more-link">리뷰 더 보러 가기 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== 푸터 ==================== -->
+  <footer class="footer">
+    <!-- 전체 푸터 내용물을 감싸는 시작점 -->
+    <div class="footer-inner">
+
+      <!-- 상단: 로고 영역(좌측)과 약관 링크 영역(우측)을 함께 묶어주는 역할 -->
+      <div class="footer-top">
+
+        <!-- 좌측 로고 부분 -->
+        <div class="footer-brand">
+          <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="./images/roomauto-logo-footer.png" alt="RoomAuto 푸터 로고" class="footer-logo">
+            <strong class="footer-name">RoomAuto</strong>
+          </a>
+        </div>
+
+        <!-- 우측 링크 부분 (이게 footer-top 안에 있어야 합니다!) -->
+        <div class="footer-links">
+          <a href="personal.html">개인정보처리방침</a>
+          <a href="promise.html">웹사이트 이용약관</a>
+        </div>
+
+      </div> <!-- /.footer-top 닫기 -->
+      <!-- 하단: 저작권(Copyright) 영역 (이것도 footer-inner 안에 있어야 합니다!) -->
+      <div class="footer-bottom">
+        <p>© 2026 RoomAuto(KLHYK). All Right Reserved</p>
+      </div>
+
+    </div> <!-- /.footer-inner 닫기 (여기가 진짜 끝부분입니다) -->
+  </footer>
+  <!-- 로그인 모달 구조 -->
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="close-modal-btn" class="close-btn">&times;</button>
+      <!-- iframe을 삭제하고 모달 안에 직접 내용을 작성합니다 -->
+      <h1 style="font-size: 24px; color: var(--ink);">안녕하세요</h1>
+      <p style="color: var(--primary-mid); font-size: 20px; margin-top: 10px; margin-bottom: 12px;">
+        간단한 회원가입으로 인테리어 추천 받기
+      </p>
+      <!-- 버튼 영역 -->
+      <div style="display: flex; flex-direction: column; gap: 20px; max-width: 300px; margin: 0 auto;">
+        <!-- 기본 공통 클래스인 .btn을 사용하고 인라인 스타일로 살짝 꾸며줍니다 -->
+        <a class="social-btn" href="/auth/google">
+          <img src="./images/flat-color-icons_google.png" width="24px" height="24px"> 구글 로그인
+        </a>
+        <a class="social-btn" href="/auth/github">
+          <img src="./images/github.png" width="24px" height="24px"> 깃허브 로그인
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="/js/common.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+
+</html>

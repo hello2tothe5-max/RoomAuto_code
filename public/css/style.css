@@ -1,0 +1,1021 @@
+/* ============================================================
+   style.css - RoomAuto 공통 디자인 시스템
+   모든 페이지가 이 파일을 사용해서 같은 모습을 유지합니다.
+   ============================================================ */
+
+/* ---------- 1. 색상과 글꼴 등 기본 값(Design Token) ---------- */
+:root {
+  --bg: #FAF5EB;
+  /* 페이지 배경(산뜻한 크림색 오프 화이트) */
+  --surface: #fffdfa;
+  /* 카드 배경 */
+  --ink: #284765;
+  /* 기본 글자색-정돈된 남색 */
+  --muted: #FAF5EB;
+  /* 흐린 글자색-산뜻한 크림색 오프 화이트 */
+  --line: #e7e0d6;
+  /* 경계선 색 */
+  --primary-mid: #284765;
+  /* 남색 포인트 색 */
+  --primary-dark: #0A2947;
+  /* 어두운 남색 포인트 색 */
+  --primary-light: #466583;
+  /* 밝은 남색 포인트 색 */
+  --accent: #F3E4C9;
+  /* 진한 베이지 포인트 색 */
+  --accent-mid: #E6E1CF;
+  /* 중간 베이지 포인트 색 */
+  --accent-heavy: #B4B5A1;
+  /* 어두운 베이지 포인트 색 */
+  --latestar: #FFE082;
+  /* 별점 평가 색상 */
+  --danger: #c2452d;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 6px 24px rgba(43, 38, 34, 0.08);
+  --nav-h: 100px;
+}
+
+/* ---------- 2. 전체 기본 스타일 ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--bg);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.container {
+  width: calc(100% - 280px);
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* 화면 밖으로 나갈 때 살짝 나타나는 효과 */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- 3. 상단 내비게이션 (하이드 온 스크롤) ---------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  background: var(--primary-mid);
+  /*background: rgba(255, 253, 250, 0.92);*/
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--primary-mid);
+  z-index: 100;
+  transition: transform 0.35s ease;
+}
+
+/* 아래로 스크롤하면 사라지고, 위로 스크롤하면 나타납니다 (JS가 클래스를 붙임) */
+.navbar.hide {
+  transform: translateY(-100%);
+}
+
+.navbar .nav-inner {
+  /* 네비게이션 최대 길이 */
+  max-width: 1920px;
+  height: var(--nav-h);
+  /* 네비게이션 상하 좌우 마진 */
+  margin: 0 auto;
+  padding: 0 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--bg);
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.logo .logo-mark {
+  width: 30px;
+  height: 30px;
+  /*background-image: url("../images/seed/roomauto-log-navbar.png");*/
+  background: var(--primary-mid);
+  border-radius: 0px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 15px;
+}
+
+.logo .logo-sub {
+  color: var(--bg);
+}
+
+.nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  margin-left: 8px;
+}
+
+.nav-links a {
+  color: var(--bg);
+  font-weight: 600;
+  font-size: 24px;
+  padding: 6px 2px;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+}
+
+.nav-links a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.nav-links a.active {
+  color: var(--accent);
+}
+
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* 네비게이션 바 "시작하기" 버튼 커스텀 */
+.nav-right .btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+}
+
+#curation {
+  height: 1080px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+}
+
+
+.curation-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* 양끝 배치가 아닌, 왼쪽부터 차례대로 배치하도록 변경 */
+  gap: 170px;
+  /* 이미지(좌)와 텍스트(우) 사이의 거리를 정확히 170px로 고정! */
+}
+
+.curation-left {
+  flex: none;
+  /* 비율 배분을 무시함 */
+  width: 800px;
+  height: 600px;
+  /* 원하시는 슬라이더 크기로 고정 */
+}
+
+.curation-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 535px;
+}
+
+/* 큐레이션 이미지 섹션 */
+
+
+/* 큐레이션 텍스트 옵션 */
+.section-before-after {
+  text-align: left;
+}
+
+/* 큐레이션 본문 스타일 */
+/* 전체 본문의 기본 스타일 (연한 색상) */
+.section-before-after {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--accent-heavy);
+  /* 1. 전체 글씨를 연한 베이지색으로 만듦 */
+}
+
+/* 강조하고 싶은 부분만 남색으로 덮어씌우는 클래스 */
+.section-before-after .highlight {
+  color: var(--primary-mid);
+  /* 2. highlight 클래스가 붙은 곳만 진한 남색으로 만듦 */
+}
+
+/* 로그인 모달 창 */
+
+/* 모달 배경 (기본적으로 숨김 처리) */
+.modal-overlay {
+  display: none;
+  /* JS로 제어하기 위해 기본은 none */
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 반투명 검은색 배경 */
+  z-index: 9999;
+  /* 다른 요소들보다 항상 위에 표시 */
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  /* 배경 블러 효과 (선택 사항) */
+}
+
+/* 모달이 활성화되었을 때 표시 */
+.modal-overlay.show {
+  display: flex;
+}
+
+/* 모달 컨텐츠 영역 */
+.modal-content {
+  padding-top: 96px;
+  padding-bottom: 92px;
+  position: relative;
+  width: 600px;
+  /* 너비를 조금 더 슬림하게 (500px -> 400px 추천) */
+  /* height: 590px; */
+  /* ❌ 이 줄을 완전히 지우거나 auto로 변경하세요 */
+  height: 400px;
+  /* ✅ 내용물에 맞게 자동으로 창 크기 조절 */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  background-color: var(--bg);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+/* 모달 닫기 버튼 */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 32px;
+  color: var(--primary-mid);
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  color: var(--accent-heavy);
+}
+
+/* 모달 등장 애니메이션 */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* 로그인 후 프로필 버튼 */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-menu:hover {
+  text-decoration: none;
+  border-color: var(--primary);
+}
+
+.user-menu img.avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--primary);
+}
+
+.user-menu .avatar-fallback {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+}
+
+/* 모바일 햄버거 버튼 */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: var(--ink);
+  padding: 4px;
+}
+
+/* =========================================
+   프로필 드롭다운 메뉴 (아코디언 스타일)
+   ========================================= */
+.user-dropdown {
+  position: absolute;
+  top: 55px;
+  /* 프로필 아이콘 바로 아래 위치 */
+  right: 0;
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 130px;
+
+  /* 애니메이션을 위해 처음엔 숨김 처리 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+  z-index: 999;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+/* 자바스크립트로 .show 클래스가 붙으면 부드럽게 나타남 */
+.user-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 메뉴 안의 링크와 버튼 디자인 통일 */
+.user-dropdown a,
+.user-dropdown button {
+  padding: 14px 16px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.user-dropdown a:hover,
+.user-dropdown button:hover {
+  background: #e4e0dc;
+  /* 마우스 올렸을 때 살짝 어두워지는 효과 */
+  color: var(--primary-mid);
+}
+
+/* 마이페이지와 로그아웃 사이의 구분선 */
+.user-dropdown a {
+  border-bottom: 1px solid var(--line);
+}
+
+
+
+/* ---------- 4. 버튼 ---------- */
+.social-btn {
+  background-color: transparent;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--primary-mid);
+  color: #fff;
+  width: 350px;
+  height: 60px;
+  font-size: 24px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-light);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background: #b58a48;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary-mid);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: var(--bg);
+  color: var(--primary-mid);
+}
+
+.btn-ghost:hover {
+  background: var(--accent);
+  color: var(--primary-dark);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 20px;
+}
+
+.btn-lg {
+  padding: 15px 32px;
+  font-size: 17px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 하트 / 북마크 작은 버튼 */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.icon-btn.liked {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: #fdf0ee;
+}
+
+.icon-btn.bookmarked {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: #faf3e6;
+}
+
+.icon-btn .ic {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* ---------- 5. 카드 ---------- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(43, 38, 34, 0.12);
+}
+
+.card .card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #ece5da;
+}
+
+.card .card-body {
+  padding: 16px 18px 18px;
+}
+
+.card .card-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card .card-meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ---------- 6. 배지 & 칩 ---------- */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #eef3ee;
+  color: var(--primary);
+}
+
+.chip {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.chip.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ---------- 7. 폼 ---------- */
+.form-field {
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  transition: border-color 0.2s;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.input-error {
+  border-color: var(--danger);
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 13px;
+  min-height: 20px;
+  margin-top: 4px;
+}
+
+/* ---------- 8. 페이지 공통 (헤더/푸터) ---------- */
+.page-main {
+  padding-top: calc(var(--nav-h) + 40px);
+  padding-bottom: 80px;
+}
+
+.page-head {
+  margin-bottom: 28px;
+}
+
+.page-head h1 {
+  font-size: 48px;
+}
+
+.page-head p {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* 푸터 */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo {
+  width: 80px;
+  height: 80px;
+  margin-right: 22px;
+  color: var(--bg);
+}
+
+.footer-name {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--bg);
+}
+
+/* 빵 부스러기(Breadcrumb) */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--primary-mid);
+  margin-bottom: 16px;
+}
+
+.breadcrumb a {
+  color: var(--primary-mid);
+}
+
+.breadcrumb a:hover {
+  color: var(--primary-light);
+}
+
+.breadcrumb .sep {
+  opacity: 0.5;
+}
+
+/* 푸터 */
+.footer {
+  border-top: 1px solid var(--primary-mid);
+  background: var(--primary-mid);
+  height: 300px;
+  padding: 40px 0;
+  margin-top: 60px;
+}
+
+/* 푸터 내부 전체 레이아웃 (세로 방향으로 상단/하단 분리) */
+.footer .footer-inner {
+  max-width: 1920px;
+  margin: 0 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* 상단(로고,링크)과 하단(저작권)을 위아래 양끝으로 벌려줌 */
+  height: 100%;
+  /* 부모(footer)의 전체 높이(300px)를 사용하도록 함 */
+  color: var(--bg);
+  /* 글자색 */
+}
+
+/* 상단 영역 (좌측 로고, 우측 링크를 가로로 배치) */
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex: 1;
+  /* 상단 빈 공간을 차지하게 하여 중앙 정렬 느낌을 줌 */
+}
+
+/* 우측 링크 그룹 */
+.footer-links {
+  display: flex;
+  gap: 32px;
+  /* 링크 사이의 간격 */
+}
+
+.footer-links a {
+  color: var(--bg);
+  /* 텍스트를 배경색(밝은색)으로 설정 */
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  /* 밑줄 제거 */
+}
+
+.footer-links a:hover {
+  opacity: 0.7;
+  /* 마우스 올렸을 때 살짝 흐려지는 효과 */
+}
+
+/* 하단 카피라이트 영역 (가운데 정렬) */
+.footer-bottom {
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.6;
+  /* 덜 튀게 살짝 투명도 적용 */
+  margin-bottom: -10px;
+  /* 푸터 하단 여백 미세 조정 */
+}
+
+
+/* 갤러리 섹션 할당 */
+
+#gallery-preview {
+  min-height: 1080px;
+  /* 대신 "최소 1080px"을 보장하되 넘치면 알아서 늘어나게 합니다. */
+  padding: 0;
+  /* 공통으로 들어가 있던 기본 패딩(88px)을 지워서 크기가 어긋나지 않게 합니다. */
+  display: flex;
+  /* 1080px 상자 안에서 내용물을 맘대로 다루기 위해 플렉스 모드를 켭니다. */
+  flex-direction: column;
+  /* 내용물(글씨, 슬라이더, 버튼)이 가로가 아닌 세로(위아래)로 차곡차곡 쌓이게 합니다. */
+  justify-content: center;
+  /* 내용물 덩어리들을 1080px 높이의 수직 기준 "정확히 한가운데"로 예쁘게 모아줍니다. */
+}
+
+
+/* ---------- 갤러리 텍스트 부분 ---------- */
+
+/* 1. 갤러리 섹션의 타이틀 껍데기만 가로 배치(플렉스)로 변신시킵니다. */
+#gallery-preview .section-title {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  /* 기존의 가운데 정렬을 덮어쓰고 왼쪽 정렬로 바꿉니다 */
+}
+
+/* 2. 왼쪽 상자(제목)와 오른쪽 상자(설명글)가 너비를 정확히 반반(1:1)씩 나눠 갖게 합니다. */
+.title-box {
+  flex: 1;
+}
+
+.desc-box {
+  flex: 1;
+}
+
+/* ---------- 9. 섹션 제목 ---------- */
+.section-title {
+  text-align: center;
+  margin-bottom: 74px;
+}
+
+.section-title .eyebrow {
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.section-title h2 {
+  font-size: 48px;
+  margin-top: 182px;
+  color: var(--primary-mid);
+  line-height: 1.2;
+}
+
+.section-title p {
+  color: var(--primary-light);
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 100px;
+  max-width: 600px;
+  line-height: 1.2;
+  margin-inline: auto;
+  text-align: left;
+}
+
+/* ---------- 10. 그리드 ---------- */
+.grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ---------- 11. 로딩 스피너 ---------- */
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--line);
+  border-top-color: var(--primary-mid);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+  color: var(--muted);
+}
+
+/* ---------- 12. 토스트 알림 ---------- */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- 13. 반응형 (태블릿 / 모바일) ---------- */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid.grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-links {
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    background: var(--surface);
+    padding: 12px 24px 20px;
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid.grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title h2 {
+    font-size: 23px;
+  }
+
+  .page-head h1 {
+    font-size: 24px;
+  }
+
+  .user-menu span.uname {
+    display: none;
+  }
+}
