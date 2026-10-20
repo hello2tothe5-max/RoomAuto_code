@@ -173,16 +173,16 @@ function seed() {
   const reviews = [
     ['후기', '인테리어 초보자도 끝!', '김인테리어', 5,
       '처음에는 무엇부터 해야 할지 막막했는데, 빈 방 사진을 올리고 스타일을 고르니 AI가 바로 추천해줬어요. 벽지 색부터 소파 위치까지 잡아줘서 너무 편했어요. 실제로 적용해보니 사진 그대로 예뻐요!',
-      '/images/seed/gal_1.svg'],
+      '/images/seed/gal_1.jpeg'],
     ['후기', '원룸이 2배 넓어 보여요', '이싱글', 4.5,
       '7평 원룸이라 좁은 게 고민이었는데 미니멀 스타일로 추천받고 나니 공간이 훨씬 넓어 보입니다. 밝은 톤의 가구 조합을 추천해줘서 좋았어요.',
-      '/images/seed/gal_3.svg'],
+      '/images/seed/gal_3.jpeg'],
     ['후기', '평면도 3D가 신기해요', '박자취', 5,
       '평면도만 있었는데 AI가 입체로 바꿔주고 마우스로 돌려볼 수 있어서 배치를 머릿속으로 그릴 수 있었어요. 거실 소파 자리 정하는 데 큰 도움이 됐습니다.',
-      '/images/seed/gal_4.svg'],
+      '/images/seed/gal_4.jpeg'],
     ['후기', '취향 분석이 재밌어요', '최북유럽', 4,
       '내가 좋아하는 스타일이 뭔지 데이터로 보여줘서 신기했어요. 북유럽, 내추럴 스타일을 가장 많이 고르더라고요. 친구들한테도 추천하고 싶은 사이트예요.',
-      '/images/seed/gal_2.svg'],
+      '/images/seed/gal_2.jpeg'],
   ];
   const insRev = db.prepare(
     `INSERT INTO reviews (title, author, rating, content, image_url)
