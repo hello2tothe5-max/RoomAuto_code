@@ -74,3 +74,36 @@
     font-size: 32px;
     margin-top: 50px;
 }
+
+/* 태블릿 및 모바일 반응형 (promise.css) */
+@media (max-width: 900px) {
+    .terms-wrapper {
+        margin: 0 10px;
+        /* 매우 크게 잡혀있던 좌우 마진 축소 */
+        padding: 40px 16px;
+        /* 상하좌우 패딩 축소 */
+    }
+
+    .terms-title {
+        font-size: 28px;
+        margin-top: 60px;
+        margin-bottom: 30px;
+    }
+
+    .terms-section h2 {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .terms-section p,
+    .terms-section ol>li,
+    .terms-section ul>li {
+        font-size: 15px;
+        /* 모바일 기기에서의 최적 텍스트 크기 */
+    }
+
+    .terms-section.addendum h2 {
+        font-size: 20px;
+        margin-top: 30px;
+    }
+}

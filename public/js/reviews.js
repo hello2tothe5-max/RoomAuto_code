@@ -13,38 +13,52 @@ async function loadReviews() {
     grid.innerHTML = reviews.map((r) => reviewCard(r)).join('');
 
     // 좋아요/북마크 버튼 연결
-    document.querySelectorAll('.icon-btn[data-kind]').forEach((btn) => {
-      bindToggle(btn, btn.dataset.kind, Number(btn.dataset.id));
-    });
+    // document.querySelectorAll('.icon-btn[data-kind]').forEach((btn) => {
+    //   bindToggle(btn, btn.dataset.kind, Number(btn.dataset.id));
+    // });
   } catch (err) {
     grid.innerHTML = `<p style="color:var(--danger);text-align:center;">${escapeHtml(err.message)}</p>`;
   }
 }
 
 // 리뷰 카드 하나의 HTML
+// 리뷰 카드 하나의 HTML (메인 페이지의 가로형 디자인 적용, 하단 버튼 제거)
+
 function reviewCard(r) {
-  const likeActive = r.my_like ? ' liked' : '';
-  const bmActive = r.my_bookmark ? ' bookmarked' : '';
+  // 작성일 데이터가 있다면 사용하고, 없다면 고정된 날짜를 사용합니다.
+  const dateStr = r.created_at ? r.created_at.substring(0, 10) : '2026-07-29';
   return `
-    <div class="review-card-wrap">
-      <a class="card review-card" href="review-detail.html?id=${r.id}">
-        <img class="card-img" src="${r.image_url}" alt="${escapeHtml(r.title)}" loading="lazy">
-        <div class="card-body">
-          <div class="review-head">
-            <span class="badge">${escapeHtml(r.author)}</span>
-            <span class="stars">${starHtml(r.rating)}</span>
-          </div>
-          <div class="card-title" style="margin-top:10px;">${escapeHtml(r.title)}</div>
-          <p class="review-excerpt">${escapeHtml(r.content)}</p>
+    <!-- a 태그가 바깥에서 감싸 전체 카드를 클릭할 수 있게 합니다 -->
+    <a href="review-detail.html?id=${r.id}" style="text-decoration: none; color: inherit; display: block; outline: none;">
+      <div class="review-fixed-card">
+        
+        <!-- 좌측: 리뷰 이미지 영역 -->
+        <div class="rfc-left">
+          <img src="${r.image_url}" class="rfc-img" alt="${escapeHtml(r.author)}님의 리뷰 사진">
         </div>
-      </a>
-      <div class="review-actions">
-        <button class="icon-btn${likeActive}" data-kind="reviews" data-id="${r.id}" data-action="like">
-          <span class="ic">♥</span> 좋아요 <span class="cnt">${r.like_count}</span>
-        </button>
-        <button class="icon-btn${bmActive}" data-kind="reviews" data-id="${r.id}" data-action="bookmark">
-          <span class="ic">☆</span> 북마크 <span class="cnt">${r.bookmark_count}</span>
-        </button>
+        
+        <!-- 우측: 텍스트 정보 영역 -->
+        <div class="rfc-right">
+          <!-- 상단: 프로필 이미지 + 이름, 별점, 날짜 -->
+          <div class="rfc-head">
+            <img src="./images/mypage.png" class="rfc-avatar" alt="프로필">
+            
+            <!-- 이름과 (별점+날짜)를 세로로 감싸는 영역 -->
+            <div class="rfc-info">
+              <span class="rfc-name">${escapeHtml(r.author)}</span>
+              <!-- 별점과 날짜 가로 배치 영역 -->
+              <div class="rfc-meta">
+                <span class="rfc-stars">${starHtml(r.rating)}</span>
+                <span class="rfc-date">${dateStr}</span> 
+              </div>
+            </div>
+          </div>
+          
+          <!-- 하단: 리뷰 제목과 본문 -->
+          <div class="rfc-title">${escapeHtml(r.title)}</div>
+          <p class="rfc-content">${escapeHtml(r.content)}</p>
+        </div>
+        
       </div>
-    </div>`;
+    </a>`;
 }

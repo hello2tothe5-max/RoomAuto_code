@@ -45,7 +45,10 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  /* 추가됨: 브라우저 단위의 가로 스크롤 차단 */
 }
+
 
 body {
   font-family: "Pretendard", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
@@ -53,6 +56,10 @@ body {
   color: var(--ink);
   line-height: 1.7;
   word-break: keep-all;
+  overflow-x: hidden;
+  /* 추가됨: body를 벗어나는 모든 요소를 숨김 처리 */
+  max-width: 100%;
+  /* 추가됨: 너비가 100%를 초과하지 못하게 강제 */
 }
 
 img {
@@ -63,10 +70,6 @@ img {
 a {
   color: var(--bg);
   text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 ul {
@@ -80,7 +83,7 @@ button {
 
 .container {
   width: calc(100% - 280px);
-  max-width: 100%;
+  max-width: 1920px;
   margin: 0 auto;
 }
 
@@ -95,6 +98,8 @@ button {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* 웹페이지 페이드 업 효과 */
 
 /* ---------- 3. 상단 내비게이션 (하이드 온 스크롤) ---------- */
 .navbar {
@@ -137,10 +142,6 @@ button {
   font-size: 24px;
   font-weight: 600;
   color: var(--bg);
-}
-
-.logo:hover {
-  text-decoration: none;
 }
 
 .logo .logo-mark {
@@ -187,7 +188,7 @@ button {
 }
 
 .nav-links a.active {
-  color: var(--accent);
+  color: var(--accent-heavy);
 }
 
 .nav-links a.active::after {
@@ -198,7 +199,7 @@ button {
   bottom: 0;
   height: 3px;
   border-radius: 2px;
-  background: var(--accent);
+  background: var(--accent-heavy);
 }
 
 /* 네비게이션 바 "시작하기" 버튼 커스텀 */
@@ -240,7 +241,7 @@ button {
 .curation-right {
   display: flex;
   flex-direction: column;
-  gap: 136px;
+  gap: 56px;
   height: 600px;
 }
 
@@ -250,6 +251,7 @@ button {
 /* 큐레이션 텍스트 옵션 */
 .section-before-after {
   text-align: left;
+  margin-top: 40px;
 }
 
 /* 큐레이션 본문 스타일 */
@@ -479,7 +481,6 @@ button {
 
 .btn:hover {
   text-decoration: none;
-  transform: translateY(-1px);
 }
 
 .btn-primary {
@@ -488,30 +489,11 @@ button {
   width: 350px;
   height: 60px;
   font-size: 24px;
+  margin-bottom: 40px;
 }
 
 .btn-primary:hover {
   background: var(--primary-light);
-}
-
-.btn-accent {
-  background: var(--accent);
-  color: #fff;
-}
-
-.btn-accent:hover {
-  background: #b58a48;
-}
-
-.btn-outline {
-  background: transparent;
-  border: 2px solid var(--primary);
-  color: var(--primary);
-}
-
-.btn-outline:hover {
-  background: var(--primary-mid);
-  color: #fff;
 }
 
 .btn-ghost {
@@ -532,15 +514,6 @@ button {
 .btn-sm {
   padding: 8px 14px;
   font-size: 20px;
-}
-
-.btn-lg {
-  padding: 15px 32px;
-  font-size: 17px;
-}
-
-.btn-block {
-  width: 100%;
 }
 
 .btn:disabled {
@@ -657,48 +630,6 @@ button {
   color: #fff;
 }
 
-/* ---------- 7. 폼 ---------- */
-.form-field {
-  margin-bottom: 16px;
-}
-
-.form-field label {
-  display: block;
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.input,
-.textarea,
-.select {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1.5px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: #fff;
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--ink);
-  transition: border-color 0.2s;
-}
-
-.input:focus,
-.textarea:focus,
-.select:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-.input-error {
-  border-color: var(--danger);
-}
-
 .form-error {
   color: var(--danger);
   font-size: 13px;
@@ -750,7 +681,7 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 20px;
   color: var(--primary-mid);
   margin-bottom: 16px;
 }
@@ -779,7 +710,8 @@ button {
 /* 푸터 내부 전체 레이아웃 (세로 방향으로 상단/하단 분리) */
 .footer .footer-inner {
   max-width: 1920px;
-  margin: 0 140px;
+  width: calc(100% - 280px);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -787,7 +719,6 @@ button {
   height: 100%;
   /* 부모(footer)의 전체 높이(300px)를 사용하도록 함 */
   color: var(--bg);
-  /* 글자색 */
 }
 
 /* 상단 영역 (좌측 로고, 우측 링크를 가로로 배치) */
@@ -873,13 +804,6 @@ button {
   margin-bottom: 74px;
 }
 
-.section-title .eyebrow {
-  color: var(--accent);
-  font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 2px;
-}
-
 .section-title h2 {
   font-size: 48px;
   margin-top: 182px;
@@ -903,10 +827,6 @@ button {
   display: grid;
   gap: 22px;
   grid-template-columns: repeat(3, 1fr);
-}
-
-.grid.grid-4 {
-  grid-template-columns: repeat(4, 1fr);
 }
 
 /* ---------- 11. 로딩 스피너 ---------- */
@@ -959,8 +879,276 @@ button {
   transform: translateX(-50%) translateY(0);
 }
 
+/* 리뷰 페이지 리뷰 픽스 카드 디자인 */
+.rfc-avatar {
+  width: 80px;
+  /* 아바타 가로 크기 */
+  height: 80px;
+  /* 아바타 세로 크기 */
+  border-radius: 50%;
+  /* 완벽한 원형으로 깎기 */
+  object-fit: cover;
+  /* 이미지가 찌그러지지 않게 꽉 채우기 */
+  background-color: var(--accent-mid);
+  /* 사진이 없을 때 보여질 기본 베이지색 배경 */
+  flex-shrink: 0;
+}
+
+.review-fixed-card {
+  max-width: 1400px;
+  width: 100%;
+  height: auto;
+  background: var(--accent-mid);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  /* 카드와 카드 사이의 상하 간격 (벌어짐) */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 80px 90px 80px 70px;
+  /* 카드 내부 여백 */
+  display: flex;
+  flex-direction: row;
+  /* ★ 이미지 좌측, 텍스트 우측 나란히 배치 */
+  gap: 40px;
+  /* 좌측 이미지와 우측 텍스트 사이의 간격 */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* 좌측 이미지 영역 */
+.rfc-left {
+  flex-shrink: 0;
+  /* 사진이 찌그러지는 것을 방지 */
+}
+
+.rfc-img {
+  max-width: 400px;
+  width: 100%;
+  aspect-ratio: 4/5;
+  height: auto;
+  object-fit: cover;
+  /* 비율 유지하며 꽉 차게 */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 우측 텍스트 영역 */
+.rfc-right {
+  margin: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* 텍스트를 위아래 기준 중앙에 예쁘게 배치 */
+  flex-grow: 1;
+  /* 남은 우측 공간을 텍스트가 모두 차지함 */
+}
+
+/* 텍스트 세부 디자인 */
+.rfc-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+
+  /* 만약 이미지처럼 전체를 가로지르는 긴 밑줄을 넣고 싶다면 아래 속성을 사용하세요 */
+  border-bottom: 2px solid var(--primary-mid);
+  padding-bottom: 12px;
+  /* 밑줄과 텍스트 사이의 여백 */
+}
+
+.rfc-name {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* 리뷰 게시 날짜 스타일 */
+.rfc-date {
+  font-size: 18px;
+  color: var(--primary-mid);
+  /* 기본 폰트 남색 */
+  margin-left: auto;
+  /* 날짜를 우측 끝으로 쭉 밀어서 정렬 */
+  font-weight: 500;
+}
+
+.rfc-stars {
+  font-size: 25px;
+}
+
+.rfc-title {
+  font-size: 32px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  color: var(--primary-mid);
+  /* 룸오토의 남색 포인트 컬러 적용 */
+}
+
+.rfc-content {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.7;
+  color: var(--primary-mid);
+  opacity: 0.8;
+}
+
+/* 우측 텍스트 정보 전체를 감싸는 영역 */
+.rfc-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* 우측 빈 공간을 모두 차지하도록 설정 */
+  gap: 1px;
+  /* 이름과 별점 사이의 위아래 간격 */
+}
+
+/* 별점과 날짜가 들어가는 가로 영역 */
+.rfc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 별점을 왼쪽, 날짜를 오른쪽 끝으로 밀어냅니다 */
+}
+
 /* ---------- 13. 반응형 (태블릿 / 모바일) ---------- */
+
+/* 태블릿 창에서 비포 애프터 우측 텍스트가 화면 밖으로 밀려나는 문제 해결 */
+@media (max-width: 1200px) {
+  #curation {
+    height: auto;
+    /* 고정된 섹션 높이 해제 */
+    padding: 80px 0;
+  }
+
+  .curation-flex {
+    flex-direction: column;
+    /* 가로 배치를 세로 배치로 변경 */
+    gap: 60px;
+    /* 위아래 간격 조정 */
+    align-items: center;
+    /* 가운데 정렬 */
+  }
+
+  .curation-left {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    /* 이미지가 찌그러지지 않도록 비율 유지 */
+    flex: none;
+  }
+
+  .curation-right {
+    width: 100%;
+    height: auto;
+    align-items: center;
+  }
+
+  .section-before-after {
+    text-align: center;
+    /* 세로 배치 시 텍스트 가운데 정렬 */
+    font-size: 36px;
+    /* 데스크톱보다 약간 작게 폰트 크기 조정 */
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 900px) {
+
+  /* 1. 과도하게 큰 폰트 사이즈 대폭 축소 */
+  .section-before-after {
+    font-size: 28px;
+    line-height: 1.5;
+  }
+
+  .section-title h2,
+  .page-head h1,
+  .footer-name,
+  .mp-main-title {
+    font-size: 28px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 40px;
+  }
+
+  /* 2. 가로 배치되어 화면을 뚫고 나가는 요소들을 세로 배치로 변경 */
+  #gallery-preview .section-title {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  /* 3. 데스크탑용 고정 높이/너비 완전 해제 및 비율 적용 */
+  #curation,
+  #gallery-preview {
+    height: auto;
+    min-height: auto;
+    padding: 60px 0;
+  }
+
+  .curation-left {
+    aspect-ratio: 4 / 3;
+    /* 사진 슬라이더가 안 보이거나 찌그러지는 현상 방지 */
+  }
+
+  .btn-primary {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  /* 4. 상단 네비게이션이 좁은 폰에서 넘치는 현상 방지 */
+  .navbar .nav-inner {
+    gap: 10px;
+  }
+
+  .nav-right {
+    display: none;
+  }
+
+  /* 좁은 화면에서는 상단 '시작하기' 버튼 숨김 (메뉴 아이콘으로 유도) */
+  .container {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .curation-flex {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .curation-left {
+    width: 100%;
+    height: auto;
+  }
+
+  .curation-right {
+    height: auto;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+
+  .navbar .nav-inner {
+    padding: 0 20px;
+  }
+
+  .footer .footer-inner {
+    margin: 0 20px;
+    /* 오타 수정 (0 px -> 0 20px) */
+  }
+
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -969,7 +1157,10 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  /* 네비게이션 모바일 모드 설정 */
   .nav-links {
+    transform: none;
+    /* 중앙정렬 강제이동 해제 */
     position: fixed;
     top: var(--nav-h);
     left: 0;
@@ -991,10 +1182,14 @@ button {
   .nav-links a {
     padding: 10px 0;
     width: 100%;
+    color: var(--ink);
+    /* 열린 메뉴 글씨색 */
   }
 
   .nav-toggle {
     display: block;
+    color: var(--bg);
+    /* 배경색과 구별되도록 햄버거 아이콘 색상을 밝은 베이지색으로 변경! */
   }
 }
 
@@ -1017,5 +1212,565 @@ button {
 
   .user-menu span.uname {
     display: none;
+  }
+}
+
+/* 리뷰 카드 모바일 전용 미디어 쿼리 */
+@media (max-width: 900px) {
+  .review-fixed-card {
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 20px;
+  }
+
+  .rfc-right {
+    margin: 0;
+  }
+}
+
+/* ==========================================================
+   모바일 햄버거 메뉴 전용 인증(로그인/마이페이지) 스타일 추가
+   ========================================================== */
+/* 1. 데스크탑 기본 환경에서는 무조건 숨김 처리 */
+.mobile-auth-menu {
+  display: none;
+}
+
+/* 2. 모바일 화면에서만 보이도록 설정 */
+@media (max-width: 900px) {
+  .mobile-auth-menu {
+    display: block;
+    /* 모바일에서 나타남 */
+    width: 100%;
+  }
+
+  /* 기존 메뉴(홈, 갤러리 등)와 구분되도록 위쪽에 선과 여백 추가 */
+  .mobile-auth-menu.mobile-divider {
+    margin-top: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+
+  /* 로그아웃 버튼의 색상을 다르게 주어 눈에 띄게 (선택사항) */
+  #mobileLogoutBtn {
+    color: var(--accent-heavy) !important;
+  }
+}
+
+/* 태블릿 및 작은 데스크톱 창에서 리뷰 카드가 화면 밖으로 밀려나는 문제 해결 */
+@media (max-width: 1440px) {
+  .review-fixed-card {
+    width: 100% !important;
+    /* home.css의 1400px 고정 무시 */
+    max-width: 100%;
+    height: auto !important;
+    padding: 60px 40px !important;
+    box-sizing: border-box;
+  }
+
+  .rfc-img {
+    width: 300px;
+    /* 카드가 작아짐에 따라 이미지 크기도 적절히 축소 */
+    height: 375px;
+  }
+
+  .rfc-right {
+    margin: 30px;
+    /* 텍스트 주변 여백 축소 */
+  }
+}
+
+@media (max-width: 1200px) {
+  .review-fixed-card {
+    flex-direction: column !important;
+    /* 가로 배치를 세로 배치로 변경 */
+    padding: 40px 20px !important;
+    gap: 30px;
+  }
+
+  .rfc-left {
+    width: 100%;
+  }
+
+  .rfc-img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    /* 세로 배치 시 이미지가 찌그러지지 않게 4:3 비율로 변경 */
+  }
+
+  .rfc-right {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* 태블릿 화면에서 네비게이션 메뉴와 로고가 겹치는 현상 방지 */
+@media (max-width: 1200px) {
+  .nav-links {
+    gap: 10px;
+    /* 메뉴 간의 간격 축소 (기존 19px) */
+  }
+
+  .nav-links a {
+    width: auto;
+    /* 120px로 고정되어 있던 너비를 해제하여 불필요한 공간 낭비 방지 */
+    padding: 6px 16px;
+    /* 적당한 클릭(터치) 영역 확보 */
+    font-size: 18px;
+    /* 폰트 크기를 줄여 공간 확보 (기존 24px) */
+  }
+}
+
+/* ==========================================================
+   글로벌 폰트 사이즈 반응형 일괄 축소 (태블릿 & 모바일)
+   ========================================================== */
+
+/* 1. 태블릿 환경 (1200px 이하) - 폰트 크기 1차 축소 */
+@media (max-width: 1200px) {
+
+  /* 네비게이션 & 버튼 */
+  .nav-links a {
+    font-size: 20px !important;
+  }
+
+  .nav-right .btn {
+    font-size: 18px !important;
+  }
+
+  /* 메인/서브 타이틀 */
+  .section-title h2 {
+    font-size: 44px !important;
+  }
+
+  .page-head h1 {
+    font-size: 40px !important;
+  }
+
+  /* 비포&애프터 큐레이션 텍스트 */
+  .section-before-after {
+    font-size: 36px !important;
+  }
+
+  /* 리뷰 카드 텍스트 */
+  .rfc-name {
+    font-size: 28px !important;
+  }
+
+  .rfc-title {
+    font-size: 26px !important;
+  }
+
+  .rfc-content {
+    font-size: 20px !important;
+  }
+
+  .rfc-date {
+    font-size: 16px !important;
+  }
+
+  /* (여기에 별점 추가) */
+  .rfc-stars {
+    font-size: 20px !important;
+  }
+
+  /* 갤러리 카드 텍스트 */
+  .custom-gallery-card .cg-title {
+    font-size: 22px !important;
+  }
+
+  .custom-gallery-card .cg-category {
+    font-size: 18px !important;
+  }
+
+  .custom-gallery-card .cg-desc {
+    font-size: 16px !important;
+  }
+}
+
+/* 2. 모바일 환경 (900px 이하) - 폰트 크기 2차 대폭 축소 */
+@media (max-width: 900px) {
+
+  /* 네비게이션 & 버튼 */
+  .nav-links a {
+    font-size: 16px !important;
+  }
+
+  .nav-right .btn {
+    font-size: 16px !important;
+  }
+
+  /* 메인/서브 타이틀 */
+  .section-title h2,
+  .page-head h1,
+  .footer-name,
+  .mp-main-title {
+    font-size: 32px !important;
+  }
+
+  /* 비포&애프터 큐레이션 텍스트 */
+  .section-before-after {
+    font-size: 26px !important;
+  }
+
+  /* 리뷰 카드 텍스트 */
+  .rfc-name {
+    font-size: 22px !important;
+  }
+
+  .rfc-title {
+    font-size: 20px !important;
+  }
+
+  .rfc-content {
+    font-size: 16px !important;
+  }
+
+  .rfc-date {
+    font-size: 14px !important;
+  }
+
+  /* (여기에 별점 추가) */
+  .rfc-stars {
+    font-size: 16px !important;
+  }
+
+  /* 갤러리 카드 텍스트 */
+  .custom-gallery-card .cg-title {
+    font-size: 18px !important;
+  }
+
+  .custom-gallery-card .cg-category {
+    font-size: 14px !important;
+  }
+
+  .custom-gallery-card .cg-desc {
+    font-size: 13px !important;
+  }
+}
+
+/* ==========================================================
+   나머지 UI 요소(버튼, 칩, 모달, 마이페이지, 갤러리, 약관 등) 반응형 축소
+   (기존에 적용된 타이틀, 네비게이션, 리뷰 카드 제외)
+   ========================================================== */
+/* 1. 태블릿 환경 (1200px 이하) */
+@media (max-width: 1200px) {
+
+  /* 버튼 및 칩 (Buttons & Chips) */
+  .btn-primary {
+    font-size: 20px !important;
+  }
+
+  /* 기존 24px */
+  .btn-sm {
+    font-size: 18px !important;
+  }
+
+  /* 기존 20px */
+  .btn {
+    font-size: 14px !important;
+  }
+
+  /* 기존 15px */
+  .chip-label {
+    font-size: 18px !important;
+  }
+
+  /* 기존 20px */
+  .chip {
+    font-size: 13px !important;
+  }
+
+  /* 기존 14px */
+  /* 인증(로그인) 모달 및 폼 */
+  .auth-card h1 {
+    font-size: 22px !important;
+  }
+
+  .social-btn {
+    font-size: 14px !important;
+  }
+
+  /* 마이페이지 (MyPage) */
+  .breadcrumb {
+    font-size: 18px !important;
+  }
+
+  .uname {
+    font-size: 28px !important;
+  }
+
+  /* 기존 32px */
+  .box-title {
+    font-size: 28px !important;
+  }
+
+  .mp-modal h2 {
+    font-size: 28px !important;
+  }
+
+  /* 갤러리 및 상세 페이지 (Gallery) */
+  .gc-title,
+  .detail-title {
+    font-size: 22px !important;
+  }
+
+  .gc-desc {
+    font-size: 15px !important;
+  }
+
+  /* 이용약관 및 개인정보처리방침 (Policy) */
+  .policy-header h1 {
+    font-size: 40px !important;
+  }
+
+  /* 기존 48px */
+  .policy-header p {
+    font-size: 20px !important;
+  }
+
+  /* 기존 24px */
+  .policy-section h2 {
+    font-size: 28px !important;
+  }
+
+  /* 기존 32px */
+}
+
+/* 2. 모바일 환경 (900px 이하) */
+@media (max-width: 900px) {
+
+  /* 버튼 및 칩 대폭 축소 (Buttons & Chips) */
+  .btn-primary {
+    font-size: 16px !important;
+    padding: 12px 20px !important;
+  }
+
+  .btn-sm {
+    font-size: 15px !important;
+    padding: 6px 12px !important;
+  }
+
+  .btn {
+    font-size: 13px !important;
+  }
+
+  .chip-label {
+    font-size: 16px !important;
+  }
+
+  .chip {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
+
+  /* 인증(로그인) 모달 및 폼 대폭 축소 */
+  .auth-card h1 {
+    font-size: 20px !important;
+  }
+
+  .social-btn {
+    font-size: 13px !important;
+    padding: 10px !important;
+  }
+
+  /* 마이페이지 대폭 축소 (MyPage) */
+  .breadcrumb {
+    font-size: 16px !important;
+  }
+
+  .uname {
+    font-size: 24px !important;
+  }
+
+  .box-title {
+    font-size: 22px !important;
+  }
+
+  .stat-value {
+    font-size: 16px !important;
+  }
+
+  .mp-modal h2 {
+    font-size: 22px !important;
+  }
+
+  .mp-modal p {
+    font-size: 14px !important;
+  }
+
+  /* 갤러리 대폭 축소 (Gallery) */
+  .gc-title,
+  .detail-title {
+    font-size: 18px !important;
+  }
+
+  .gc-desc {
+    font-size: 13px !important;
+  }
+
+  /* 이용약관 및 방침 대폭 축소 (Policy) */
+  .policy-header h1 {
+    font-size: 30px !important;
+  }
+
+  .policy-header p {
+    font-size: 16px !important;
+  }
+
+  .policy-section h2 {
+    font-size: 22px !important;
+  }
+
+  .policy-section p,
+  .policy-section li {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* ==========================================================
+   리뷰 카드 반응형 레이아웃 재정의 (태블릿 가로 유지 / 모바일 세로)
+   ========================================================== */
+/* 1. 태블릿 환경 (1200px 이하) - 데스크탑처럼 가로 유지 + 크기 축소 */
+@media (max-width: 1200px) {
+
+  /* 카드가 세로로 꺾이는 것을 막고 가로(row) 강제 유지 */
+  .review-fixed-card {
+    flex-direction: row !important;
+    padding: 30px !important;
+    gap: 30px !important;
+    align-items: center;
+    /* 텍스트와 이미지 세로 중앙 정렬 */
+  }
+
+  /* 좌측 이미지 크기를 데스크탑(400px)보다 작은 280px로 축소 */
+  .review-fixed-card .rfc-left {
+    width: 280px !important;
+    max-width: 280px !important;
+    display: flex;
+  }
+
+  .review-fixed-card .rfc-img {
+    width: 280px !important;
+    max-width: 280px !important;
+    height: auto !important;
+    aspect-ratio: 4 / 5 !important;
+    /* 데스크탑 원본 비율 유지 */
+    object-fit: cover !important;
+  }
+
+  /* 우측 텍스트 영역 */
+  .review-fixed-card .rfc-right {
+    margin: 0 !important;
+    width: calc(100% - 310px) !important;
+    /* 전체에서 이미지와 여백을 뺀 너비 */
+  }
+}
+
+/* 2. 모바일 환경 (900px 이하) - 공간이 좁으므로 세로(column) 배치 */
+@media (max-width: 900px) {
+  .review-fixed-card {
+    flex-direction: column !important;
+    padding: 30px 20px !important;
+    gap: 20px !important;
+  }
+
+  /* 모바일에서는 이미지가 윗부분에 가로 100%로 꽉 차도록 배치 */
+  .review-fixed-card .rfc-left,
+  .review-fixed-card .rfc-img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    /* 가로로 좀 더 긴 비율로 변경 */
+  }
+
+  .review-fixed-card .rfc-right {
+    width: 100% !important;
+  }
+}
+
+/* ==========================================================
+   태블릿 환경(1200px 이하) '디자인 시작' 버튼 적절히 축소
+   ========================================================== */
+@media (max-width: 1200px) {
+  .prompt-submit {
+    font-size: 20px !important;
+    /* 글씨 크기를 24px -> 18px로 축소 */
+  }
+}
+
+/* ============================================================
+   반응형 (태블릿 & 모바일 환경 푸터 축소)
+   ============================================================ */
+@media (max-width: 900px) {
+
+  /* 태블릿 및 작은 PC 화면 사이즈 조절 */
+  .footer-logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 16px;
+  }
+
+  .footer-name {
+    font-size: 36px;
+  }
+
+  .footer-links {
+    gap: 20px;
+  }
+
+  .footer-links a {
+    font-size: 16px;
+  }
+
+  /* 태블릿: 푸터 좌우 여백을 적절히 줄여줌 */
+  .footer .footer-inner {
+    width: 100%;
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  /* 모바일 화면 사이즈 조절 */
+  .footer-logo {
+    width: 44px;
+    height: 44px;
+    margin-right: 12px;
+  }
+
+  .footer-name {
+    font-size: 24px;
+  }
+
+  .footer-links {
+    gap: 12px;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+  }
+
+  /* 모바일: 푸터 좌우 여백을 더 줄여줌 */
+  .footer .footer-inner {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  /* 양끝 배치(row)를 취소하고 세로(column)로 쌓으면서 중앙 정렬 */
+  .footer-top {
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    /* 로고와 밑에 있는 링크들 사이의 간격 */
+  }
+
+  /* 링크들이 화면을 넘어가면 자연스럽게 줄바꿈되도록 설정 */
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
   }
 }

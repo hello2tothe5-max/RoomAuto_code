@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!user) return;
   currentUser = user;
 
-  initTabs();
+  // initTabs();
   await loadProfile();
-  await loadHistory();
-  await loadList('likes');
-  await loadList('bookmarks');
+  // await loadHistory();
+  // await loadList('likes');
+  // await loadList('bookmarks');
   initSettings();
 });
 
@@ -34,29 +34,51 @@ function initTabs() {
 // ---------------------------------------------------------------
 // 프로필 카드 그리기
 // ---------------------------------------------------------------
+// 프로필 카드 그리기 (기존 + 새 UI 동시 지원)
+// ---------------------------------------------------------------
 async function loadProfile() {
+  // 1. 기존 UI 업데이트
   const card = document.getElementById('profileCard');
-  const avatar = currentUser.avatar
-    ? `<img src="${currentUser.avatar}" alt="프로필">`
-    : `<span>${escapeHtml(currentUser.nickname.slice(0, 1))}</span>`;
-
-  const providerName = {
-    local: '이메일 계정',
-    google: '구글 로그인',
-    github: '깃허브 로그인',
-  }[currentUser.provider] || currentUser.provider;
-
-  card.innerHTML = `
-    <div class="profile-avatar">${avatar}</div>
-    <div class="profile-info">
-      <div class="p-nick">${escapeHtml(currentUser.nickname)}</div>
-      <div class="p-email">${escapeHtml(currentUser.email || '이메일 없음')}</div>
-      <div class="p-meta">
-        <span class="badge">${providerName}</span>
-        <span class="badge">가입일: ${formatDate(currentUser.created_at)}</span>
+  if (card) {
+    const avatar = currentUser.avatar
+      ? `<img src="${currentUser.avatar}" alt="프로필">`
+      : `<span>${escapeHtml(currentUser.nickname.slice(0, 1))}</span>`;
+    const providerName = {
+      local: '이메일 계정',
+      google: '구글 로그인',
+      github: '깃허브 로그인',
+    }[currentUser.provider] || currentUser.provider;
+    card.innerHTML = `
+      <div class="profile-avatar">${avatar}</div>
+      <div class="profile-info">
+        <div class="p-nick">${escapeHtml(currentUser.nickname)}</div>
+        <div class="p-email">${escapeHtml(currentUser.email || '이메일 없음')}</div>
+        <div class="p-meta">
+          <span class="badge">${providerName}</span>
+          <span class="badge">가입일: ${formatDate(currentUser.created_at)}</span>
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  }
+  // 2. 새 UI 업데이트
+  const displayUsername = document.getElementById('displayUsername');
+  const avatarImg = document.querySelector('.mp-avatar img');
+  if (displayUsername) displayUsername.textContent = currentUser.nickname;
+  if (avatarImg && currentUser.avatar) avatarImg.src = currentUser.avatar;
+  // 3. 새 UI 로그아웃 버튼 연결
+  const logoutBtn = document.getElementById('mpLogoutBtn');
+  if (logoutBtn && !logoutBtn.dataset.bound) {
+    logoutBtn.dataset.bound = 'true';
+    logoutBtn.addEventListener('click', async () => {
+      if (!confirm('로그아웃 하시겠습니까?')) return;
+      try {
+        await api('/auth/logout', { method: 'POST' });
+        window.location.href = 'index.html';
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  }
 }
 
 // ---------------------------------------------------------------
@@ -126,76 +148,175 @@ function mpGrid(items) {
 }
 
 // ---------------------------------------------------------------
-// 설정 탭 - 정보 수정 / 비밀번호 변경 / 탈퇴
+// 설정 탭 - 정보 수정 / 회원 탈퇴 (소셜 로그인 전용)
 // ---------------------------------------------------------------
 function initSettings() {
   const editNick = document.getElementById('editNickname');
-  const editEmail = document.getElementById('editEmail');
-  editNick.value = currentUser.nickname;
-  editEmail.value = currentUser.email || '';
 
-  // 1) 회원 정보 수정
-  document.getElementById('saveProfileBtn').addEventListener('click', async () => {
-    const editError = document.getElementById('editError');
-    editError.textContent = '';
+  if (editNick) {
+    editNick.value = currentUser.nickname;
+  }
+  // 1) 회원 정보 수정 (닉네임만 변경)
+  document.getElementById('saveProfileBtn')?.addEventListener('click', async () => {
     try {
-      const { user } = await api('/user/me', {
-        method: 'PUT',
-        body: JSON.stringify({ nickname: editNick.value.trim(), email: editEmail.value.trim() }),
-      });
-      currentUser = user;
-      await loadProfile();
-      editNick.value = user.nickname;
-      editEmail.value = user.email || '';
-      showToast('회원 정보를 수정했어요.');
+      // 닉네임이 기존과 다르게 변경되었을 때만 업데이트 실행
+      if (editNick && editNick.value.trim() !== currentUser.nickname) {
+        const { user } = await api('/user/me', {
+          method: 'PUT',
+          body: JSON.stringify({ nickname: editNick.value.trim() }),
+        });
+        currentUser = user;
+
+        await loadProfile(); // 프로필 카드 닉네임 즉시 갱신
+        if (editNick) editNick.value = user.nickname;
+        showToast('계정 정보가 성공적으로 수정되었습니다.');
+      } else {
+        showToast('변경된 내용이 없습니다.');
+      }
     } catch (err) {
-      editError.textContent = err.message;
+      showToast(err.message);
     }
   });
-
-  // 2) 비밀번호 변경
-  document.getElementById('changePwBtn').addEventListener('click', async () => {
-    const pwError = document.getElementById('pwError');
-    pwError.textContent = '';
-    const current = document.getElementById('pwCurrent').value;
-    const next = document.getElementById('pwNext').value;
-    const next2 = document.getElementById('pwNext2').value;
-    if (!current || !next || !next2) {
-      pwError.textContent = '모든 칸을 입력해 주세요.';
-      return;
-    }
-    if (next !== next2) {
-      pwError.textContent = '새 비밀번호가 서로 다릅니다.';
-      return;
-    }
-    try {
-      await api('/user/me/password', {
-        method: 'PUT',
-        body: JSON.stringify({ current, next }),
-      });
-      document.getElementById('pwCurrent').value = '';
-      document.getElementById('pwNext').value = '';
-      document.getElementById('pwNext2').value = '';
-      showToast('비밀번호를 변경했어요.');
-    } catch (err) {
-      pwError.textContent = err.message;
-    }
-  });
-
-  // 3) 회원 탈퇴
-  document.getElementById('deleteBtn').addEventListener('click', async () => {
-    const delError = document.getElementById('delError');
-    delError.textContent = '';
-    if (!confirm('정말 탈퇴하시겠어요? 이 작업은 되돌릴 수 없어요.')) return;
-    try {
-      await api('/user/me', {
-        method: 'DELETE',
-        body: JSON.stringify({ password: document.getElementById('delPassword').value }),
-      });
-      showToast('탈퇴되었어요. 그동안 이용해 주셔서 감사해요.');
-      setTimeout(() => { window.location.href = 'index.html'; }, 600);
-    } catch (err) {
-      delError.textContent = err.message;
-    }
-  });
+  // 2) 회원 탈퇴 (커스텀 모달 팝업 사용)
+  const deleteBtn = document.getElementById('deleteBtn');
+  const deleteModal = document.getElementById('deleteModalOverlay');
+  const btnDeleteYes = document.getElementById('btnDeleteYes');
+  const btnDeleteNo = document.getElementById('btnDeleteNo');
+  if (deleteBtn && deleteModal) {
+    // 탈퇴 버튼 클릭 시 모달 열기
+    deleteBtn.addEventListener('click', () => {
+      deleteModal.classList.add('active');
+    });
+    // '아니오' 버튼 클릭 시 모달 닫기
+    btnDeleteNo.addEventListener('click', () => {
+      deleteModal.classList.remove('active');
+    });
+    // ▼ 추가할 코드: 모달창 외부(어두운 배경) 클릭 시 닫기
+    deleteModal.addEventListener('click', (e) => {
+      // 클릭한 요소가 정확히 배경(오버레이)일 때만 동작하도록 설정 (내부 박스 클릭 제외)
+      if (e.target === deleteModal) {
+        deleteModal.classList.remove('active');
+      }
+    });
+    // '네' 버튼 클릭 시 실제 탈퇴 API 호출
+    btnDeleteYes.addEventListener('click', async () => {
+      try {
+        await api('/user/me', {
+          method: 'DELETE',
+          body: JSON.stringify({ password: '' }), // 소셜 로그인이므로 비밀번호 공백 전송
+        });
+        showToast('탈퇴되었어요. 그동안 이용해 주셔서 감사해요.');
+        deleteModal.classList.remove('active'); // 모달 닫기
+        setTimeout(() => { window.location.href = 'index.html'; }, 600);
+      } catch (err) {
+        showToast(err.message);
+      }
+    });
+  }
 }
+
+// ===============================================================
+// 마이페이지 내 갤러리 화면 전환 기능 (나의 디자인, 좋아요, 북마크)
+// ===============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const mainView = document.getElementById('mypage-main-view');
+  const subView = document.getElementById('mypage-sub-view');
+  const subHeader = document.getElementById('sub-view-header');
+  const subGrid = document.getElementById('sub-view-grid');
+
+  const myDesignsCard = document.getElementById('mydesigns-card');
+  const likesCard = document.getElementById('card-likes');
+  const bookmarksCard = document.getElementById('card-bookmarks');
+
+  // 화면 전환 함수 (기존 화면 숨김 + 갤러리 노출)
+  function showSubView(title, breadcrumbTitle) {
+    // 1) 기존 메인 화면 숨기기, 서브 뷰(갤러리)만 켜기
+    mainView.style.display = 'none';
+    subView.style.display = 'block';
+    // 2) 하단으로 스크롤하지 않고 화면 최상단으로 고정
+    window.scrollTo(0, 0);
+    // 빵부스러기와 타이틀 렌더링
+    subHeader.innerHTML = `
+      <nav class="breadcrumb">
+        <a href="index.html">홈</a><span class="sep">›</span>
+        <a href="#" id="bc-back-btn">마이 페이지</a><span class="sep">›</span>
+        <span>${breadcrumbTitle}</span>
+      </nav>
+      <h1 class="mp-main-title">${title}</h1>
+    `;
+
+    // 빵부스러기의 '마이 페이지' 클릭 이벤트 (즉시 원상복구)
+    document.getElementById('bc-back-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+
+      // 서브 뷰(갤러리) 끄고 다시 메인 화면 켜기
+      subView.style.display = 'none';
+      mainView.style.display = 'block';
+
+      // 화면 최상단으로 복귀
+      window.scrollTo(0, 0);
+    });
+  }
+
+  // 1) 나의 디자인 클릭
+  if (myDesignsCard) {
+    myDesignsCard.addEventListener('click', async () => {
+      showSubView('나의 디자인', '나의 디자인');
+      subGrid.innerHTML = '<h3 style="color:var(--primary-mid);">불러오는 중...</h3>';
+      try {
+        const { history } = await api('/user/me/history');
+        if (!history || history.length === 0) {
+          subGrid.innerHTML = '<h3 style="color:var(--primary-mid); grid-column: span 2;">아직 생성한 디자인이 없습니다.</h3>';
+          return;
+        }
+        // 첨부 이미지처럼 깔끔한 2단 이미지 렌더링
+        subGrid.innerHTML = history.map(h => `
+          <div style="width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px;">
+            <img src="${h.output_image}" alt="나의 디자인" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        `).join('');
+      } catch (err) {
+        subGrid.innerHTML = `<p style="color:var(--danger); grid-column: span 2;">${escapeHtml(err.message)}</p>`;
+      }
+    });
+  }
+
+  // 2) 좋아요 / 북마크 클릭 공통 로직
+  async function handleLikeBookmarkClick(apiPath, title) {
+    showSubView(title, title);
+    subGrid.innerHTML = '<h3 style="color:var(--primary-mid);">불러오는 중...</h3>';
+    try {
+      const { images, reviews } = await api(`/user/me/${apiPath}`);
+      // 이미지 배열과 리뷰 배열을 합침
+      const combined = [...images, ...reviews];
+
+      if (combined.length === 0) {
+        subGrid.innerHTML = '<h3 style="color:var(--primary-mid); grid-column: span 2;">해당하는 디자인이 없습니다.</h3>';
+        return;
+      }
+      // 첨부 이미지처럼 깔끔한 2단 이미지 렌더링 (해당 갤러리/리뷰 원본으로 이동 가능하도록 a 태그 사용)
+      subGrid.innerHTML = combined.map(item => {
+        // 리뷰인지 갤러리인지 구분하여 링크 생성
+        const detailUrl = item.room_id ? `review-detail.html?id=${item.id}` : `gallery-detail.html?id=${item.id}`;
+        return `
+          <a href="${detailUrl}" style="display: block; width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; text-decoration: none;">
+            <img src="${item.image_url}" alt="디자인 이미지" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+        `;
+      }).join('');
+    } catch (err) {
+      subGrid.innerHTML = `<p style="color:var(--danger); grid-column: span 2;">${escapeHtml(err.message)}</p>`;
+    }
+  }
+
+  // 좋아요 클릭
+  if (likesCard) {
+    likesCard.addEventListener('click', () => handleLikeBookmarkClick('likes', '좋아요 한 디자인'));
+  }
+
+  // 북마크 클릭
+  if (bookmarksCard) {
+    bookmarksCard.addEventListener('click', () => handleLikeBookmarkClick('bookmarks', '북마크 한 디자인'));
+  }
+});
+

@@ -66,7 +66,8 @@ function initNav() {
 // ---------------------------------------------------------------
 async function initAuthNav() {
   const navRight = document.querySelector('.nav-right');
-  if (!navRight) return;
+  const navLinks = document.querySelector('.nav-links');
+  if (!navRight || !navLinks) return;
   try {
     const { user } = await api('/auth/me');
     if (user) {
@@ -95,21 +96,48 @@ async function initAuthNav() {
           dropdown.classList.remove('show');
         }
       });
+
+      // 👉 [여기부터 새로 추가!] 모바일 햄버거 메뉴용 마이페이지/로그아웃 
+      navLinks.insertAdjacentHTML('beforeend', `
+        <li class="mobile-auth-menu mobile-divider"><a href="mypage.html">마이페이지</a></li>
+        <li class="mobile-auth-menu"><a href="#" id="mobileLogoutBtn">로그아웃</a></li>
+      `);
+
       // 로그아웃 버튼 기능
       document.getElementById('logoutBtn').addEventListener('click', async () => {
         await api('/auth/logout', { method: 'POST' });
         showToast('로그아웃 완료!');
         window.location.href = 'index.html';
       });
+
+      // 👇 [여기에 아래 코드 삽입] 모바일 로그아웃 버튼 기능
+      const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+      if (mobileLogoutBtn) {
+        mobileLogoutBtn.addEventListener('click', async (e) => {
+          e.preventDefault(); // <a> 태그 클릭 시 화면이 최상단으로 튕기는 현상 방지
+          await api('/auth/logout', { method: 'POST' });
+          showToast('로그아웃 완료!');
+          window.location.href = 'index.html';
+        });
+      }
+
     } else {
       // 로그인 전: 시작하기 버튼 표시
       navRight.innerHTML = `
         <a class="btn btn-ghost btn-sm" href="login.html" id="start-btn">시작하기</a>
       `;
+      // 👉 [새로 추가] 모바일 비로그인: 햄버거 메뉴에 로그인 추가
+      navLinks.insertAdjacentHTML('beforeend', `
+        <li class="mobile-auth-menu mobile-divider"><a href="login.html">로그인 / 시작하기</a></li>
+      `);
     }
   } catch (err) {
     // 서버 연결이 안 되면 시작하기 버튼만 표시
     navRight.innerHTML = `<a class="btn btn-ghost btn-sm" href="login.html" id="start-btn">시작하기</a>`;
+    // 👉 [새로 추가] 모바일 햄버거 메뉴에 로그인 추가
+    navLinks.insertAdjacentHTML('beforeend', `
+      <li class="mobile-auth-menu mobile-divider"><a href="login.html">로그인 / 시작하기</a></li>
+    `);
   }
 }
 

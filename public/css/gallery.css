@@ -9,12 +9,26 @@
   gap: 12px;
   margin-bottom: 26px;
 }
-.filter-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.filter-line .f-label { font-weight: 700; font-size: 14px; color: var(--muted); }
-.filter-search { max-width: 260px; }
+
+.filter-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-line .f-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.filter-search {
+  max-width: 260px;
+}
 
 /* ---------- 갤러리 카드 ---------- */
-.gallery-card-wrap {
+/* .gallery-card-wrap {
   display: flex;
   flex-direction: column;
   background: var(--surface);
@@ -45,39 +59,224 @@
   background: rgba(255, 255, 255, 0.92);
   color: var(--primary);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
+} */
 
-/* ---------- 상세 페이지 ---------- */
-.detail-layout {
+/* ---------- 커스텀 갤러리 카드 ---------- */
+
+/* =========================================
+   새로운 갤러리 2열 그리드 및 카드 디자인 
+   ========================================= */
+
+/* 2열 그리드 설정 (기존 .grid 오버라이드) */
+#galleryGrid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 28px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .detail-layout { grid-template-columns: 1fr; }
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 42px;
+  row-gap: 114px;
 }
 
-.detail-img {
-  border-radius: var(--radius);
+/* 갤러리 카드 전체 래퍼 */
+.custom-gallery-card {
+  background-color: var(--accent);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: var(--shadow);
-  background: #ece5da;
-  position: sticky;
-  top: calc(var(--nav-h) + 20px);
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 800px;
+  max-height: 700px;
+  margin: 0 auto;
 }
-.detail-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-@media (max-width: 900px) { .detail-img { position: static; } }
 
-.detail-info .d-title { font-size: 26px; font-weight: 800; }
-.detail-info .d-meta { color: var(--muted); margin: 8px 0 18px; display: flex; gap: 8px; flex-wrap: wrap; }
-.detail-info .d-desc { color: var(--ink); line-height: 1.8; margin-bottom: 20px; }
-.detail-info .d-actions { display: flex; gap: 10px; margin-bottom: 26px; flex-wrap: wrap; }
+/* 카드 상단 이미지 */
+.custom-gallery-card .cg-img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
 
-.detail-divider { border: none; border-top: 1px solid var(--line); margin: 26px 0; }
+/* 카드 하단 정보 영역 */
+.custom-gallery-card .cg-body {
+  padding: 20px 60px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 300px;
+  max-height: 300px;
+  overflow: hidden;
+}
 
-.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 900px) { .related-grid { grid-template-columns: repeat(2, 1fr); } }
-.related-item { border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
-.related-item img { aspect-ratio: 4 / 3; object-fit: cover; }
-.related-item .rel-body { padding: 10px 12px; font-size: 13px; font-weight: 700; }
+/* 카테고리(알약 모양) 버튼 묶음 */
+.custom-gallery-card .cg-categories {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  /* 제목과의 간격 */
+}
+
+/* 개별 카테고리 태그 스타일 */
+.custom-gallery-card .cg-category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 28px;
+  border: 1px solid var(--primary-mid);
+  /* 남색 테두리 */
+  border-radius: 999px;
+  /* 완전한 둥근 알약 모양 */
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-mid);
+  /* 남색 글씨 */
+  background-color: var(--bg);
+}
+
+
+/* 이미지 제목 */
+.custom-gallery-card .cg-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-mid);
+  /* 테마 기본 남색 */
+  margin-bottom: 12px;
+}
+
+/* 설명 (Lorem ipsum) */
+.custom-gallery-card .cg-desc {
+  font-size: 16px;
+  color: var(--primary-mid);
+  line-height: 1.5;
+  margin-bottom: auto;
+  /* 카드 높이가 달라도 푸터를 하단에 고정 */
+}
+
+/* 하단 가로선 */
+.custom-gallery-card .cg-divider {
+  border: 0;
+  border-top: 2px solid var(--primary-mid);
+  /* 남색의 반투명 선 */
+  margin: 18px 0;
+}
+
+/* 하단 푸터 (아이콘 영역) */
+.custom-gallery-card .cg-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 푸터 버튼 공통 설정 */
+.custom-gallery-card .cg-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-mid);
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0;
+}
+
+.custom-gallery-card .cg-btn svg {
+  color: var(--primary-mid);
+  /* 비어있을 때 테두리 색상 */
+}
+
+/* 반응형: 모바일 화면에서는 1열로 꽉 차게 변경 */
+@media (max-width: 768px) {
+  #galleryGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== 좋아요 & 북마크 이미지 토글 스타일 ===== */
+/* 1. 기본 상태 (off 이미지) */
+.icon-like {
+  display: inline-block;
+  width: 40px;
+  height: 38px;
+  background: url('/images/like_off.png') no-repeat center/contain;
+  vertical-align: middle;
+}
+
+.icon-bm {
+  display: inline-block;
+  width: 28px;
+  height: 38px;
+  background: url('/images/bookmark_off.png') no-repeat center/contain;
+  vertical-align: middle;
+}
+
+/* 2. 활성화(on) 상태: JS에서 버튼에 liked나 bookmarked 클래스를 붙이면 이미지가 변경됨 */
+.cg-like-btn.liked .icon-like {
+  background: url('/images/like_on.png') no-repeat center/contain;
+}
+
+.cg-bm-btn.bookmarked .icon-bm {
+  background: url('/images/bookmark_on.png') no-repeat center/contain;
+}
+
+/* 버튼 기본 스타일 초기화 (배경 투명, 테두리 없음 등) */
+.cg-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  color: var(--primary-mid);
+}
+
+/* 태블릿 및 모바일 창 갤러리 카드 통일성 유지 및 하단 아이콘 밀림 방지 */
+@media (max-width: 900px) {
+  .custom-gallery-card {
+    height: 100%;
+    max-height: none;
+  }
+
+  /* 1. 모바일에서 너무 넓은 좌우 여백(60px)을 줄여 내용이 들어갈 공간 확보 */
+  .custom-gallery-card .cg-body {
+    padding: 24px 20px;
+    max-height: none;
+    flex: 1;
+  }
+
+  /* 2. 알약 칩이 좁은 화면에서 튀어나가지 않고 유연하게 배치되도록 수정 */
+  .custom-gallery-card .cg-categories {
+    flex-wrap: wrap;
+    /* 공간이 부족하면 아래로 줄바꿈 */
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .custom-gallery-card .cg-category {
+    width: auto;
+    /* 기존 120px 고정 너비 해제 */
+    padding: 0 14px;
+    height: 32px;
+    font-size: 15px;
+    /* 글씨 크기 모바일에 맞춰 소폭 축소 */
+  }
+
+  /* 3. 설명글이 길어질 때 하단 아이콘이 불규칙하게 밀려나는 현상 방지 */
+  .custom-gallery-card .cg-desc {
+    /* 3줄까지만 보여주고 초과분은 ... 으로 말줄임 처리 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* 텍스트가 1~2줄로 짧아도 항상 3줄에 해당하는 높이(약 72px)를 확보하여 
+       모든 카드의 좋아요/북마크 아이콘 위치를 동일 선상에 고정 */
+    min-height: 72px;
+    margin-bottom: auto;
+  }
+}

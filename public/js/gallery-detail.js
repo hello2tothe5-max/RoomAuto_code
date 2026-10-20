@@ -14,66 +14,117 @@ async function loadDetail(id) {
     // 빵 부스러기에 제목 반영
     document.getElementById('breadcrumbTitle').textContent = img.title;
 
-    const likeActive = img.my_like ? ' liked' : '';
-    const bmActive = img.my_bookmark ? ' bookmarked' : '';
+    const match = img.image_url.match(/\d+/);
+    const seedNumber = match ? match[0] : 1;
 
+    // 이미지 너비 800px, 높이 700px, 상하/좌우 갭 조정 적용
     area.innerHTML = `
-      <div class="detail-layout">
-        <div class="detail-img">
-          <img src="${img.image_url}" alt="${escapeHtml(img.title)}">
-        </div>
-        <div class="detail-info">
-          <h1 class="d-title">${escapeHtml(img.title)}</h1>
-          <div class="d-meta">
-            <span class="badge">${escapeHtml(img.room)}</span>
-            <span class="badge">${escapeHtml(img.style)}</span>
-          </div>
-          <p class="d-desc">${escapeHtml(img.description)}</p>
-          <p style="color:var(--muted);font-size:13px;">작성: ${escapeHtml(img.author)} · ${formatDate(img.created_at)}</p>
-          <div class="d-actions">
-            <button class="icon-btn${likeActive}" id="likeBtn" data-action="like">
-              <span class="ic">♥</span> 좋아요 <span class="cnt">${img.like_count}</span>
-            </button>
-            <button class="icon-btn${bmActive}" id="bmBtn" data-action="bookmark">
-              <span class="ic">☆</span> 북마크 <span class="cnt">${img.bookmark_count}</span>
-            </button>
-          </div>
-        </div>
+      <style>
+        .detail-gallery-grid {
+          display: grid;
+          /* 2열 배치: 각각 800px 고정 너비 지정 */
+          grid-template-columns: repeat(2, 800px); 
+          /* 상하 갭 112px, 좌우 갭 40px */
+          row-gap: 112px;
+          column-gap: 40px;
+          justify-content: center; /* 전체 그리드를 화면 중앙에 정렬 */
+          margin: 60px auto;
+          padding: 0 0px 80px 0px;
+        }
+        .detail-gallery-grid img {
+          width: 800px;
+          height: 700px;
+          border-radius: 12px;
+          object-fit: cover;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+          cursor: pointer;
+        }
+        .detail-gallery-grid img:hover {
+          transform: scale(1.02);
+        }
+        
+        /* 모바일 등 작은 화면일 때는 다시 1열 및 가변 크기로 반응형 조정 */
+        @media (max-width: 1680px) {
+          .detail-gallery-grid {
+            /* 화면이 800+800+40보다 작아지면 비율에 맞게 줄어들도록 설정 */
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 1640px;
+          }
+          .detail-gallery-grid img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 8/7; /* 800:700 비율 유지 */
+          }
+        }
+        @media (max-width: 768px) {
+          .detail-gallery-grid {
+            grid-template-columns: 1fr; 
+            row-gap: 30px; /* 모바일에서는 갭 축소 */
+          }
+        }
+
+        /* 팝업(모달) 스타일 */
+        #imageModal {
+          display: none; 
+          position: fixed; 
+          top: 0; 
+          left: 0; 
+          width: 100%; 
+          height: 100%; 
+          background: rgba(0, 0, 0, 0.50); 
+          z-index: 9999; 
+          justify-content: center; 
+          align-items: center; 
+          cursor: pointer;
+        }
+        #imageModal img {
+          max-width: 90%; 
+          max-height: 90%; 
+          border-radius: 12px; 
+          box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+          animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+      </style>
+      
+      <!-- 2x2 이미지 그리드 (추출한 seedNumber 적용) -->
+      <div class="detail-gallery-grid">
+        <img src="/images/seed/popup_img${seedNumber}-1.png" alt="${escapeHtml(img.title)} 1">
+        <img src="/images/seed/popup_img${seedNumber}-2.png" alt="${escapeHtml(img.title)} 2">
+        <img src="/images/seed/popup_img${seedNumber}-3.png" alt="${escapeHtml(img.title)} 3">
+        <img src="/images/seed/popup_img${seedNumber}-4.png" alt="${escapeHtml(img.title)} 4">
       </div>
 
-      <hr class="detail-divider">
-      <h2 style="margin-bottom:18px;">비슷한 스타일 둘러보기</h2>
-      <div class="related-grid" id="relatedGrid"></div>
+      <!-- 클릭 시 나타날 확대 모달 창 -->
+      <div id="imageModal">
+        <img id="modalImage" src="" alt="Enlarged Image">
+      </div>
     `;
 
-    // 좋아요/북마크 버튼 연결
-    bindToggle(document.getElementById('likeBtn'), 'images', img.id);
-    bindToggle(document.getElementById('bmBtn'), 'images', img.id);
+    // ===== 클릭 이벤트(팝업 로직) 등록 =====
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const gridImages = document.querySelectorAll('.detail-gallery-grid img');
 
-    loadRelated(img);
+    // 각 갤러리 이미지 클릭 시 모달 열기
+    gridImages.forEach(image => {
+      image.addEventListener('click', () => {
+        modalImg.src = image.src;
+        modal.style.display = 'flex';
+      });
+    });
+
+    // 모달 배경이나 모달 이미지를 다시 클릭하면 닫기
+    modal.addEventListener('click', () => {
+      modal.style.display = 'none';
+      modalImg.src = '';
+    });
+
   } catch (err) {
     area.innerHTML = `<p style="color:var(--danger);text-align:center;">${escapeHtml(err.message)}</p>`;
-  }
-}
-
-// 같은 스타일이나 공간의 다른 사진을 아래에 보여주기
-async function loadRelated(current) {
-  try {
-    const images = await api(`/gallery?style=${encodeURIComponent(current.style)}`);
-    // 지금 보고 있는 사진은 제외하고 최대 4장
-    const related = images.filter((i) => i.id !== current.id).slice(0, 4);
-    const grid = document.getElementById('relatedGrid');
-    if (!related.length) {
-      grid.innerHTML = '<p style="color:var(--muted);">관련 사진이 아직 없어요.</p>';
-      return;
-    }
-    grid.innerHTML = related.map((r) => `
-      <a class="related-item" href="gallery-detail.html?id=${r.id}">
-        <img src="${r.image_url}" alt="${escapeHtml(r.title)}" loading="lazy">
-        <div class="rel-body">${escapeHtml(r.title)}</div>
-      </a>
-    `).join('');
-  } catch (err) {
-    // 관련 사진은 문제가 생겨도 치명적이지 않으므로 조용히 넘어감
   }
 }

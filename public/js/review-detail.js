@@ -1,47 +1,39 @@
 // review-detail.js - 리뷰 상세 페이지 전용 자바스크립트
-
 document.addEventListener('DOMContentLoaded', () => {
   const id = new URLSearchParams(location.search).get('id');
   loadDetail(id);
 });
-
 async function loadDetail(id) {
   const area = document.getElementById('detailArea');
   try {
     const r = await api(`/reviews/${id}`);
-
-    document.getElementById('breadcrumbTitle').textContent = r.title;
-
-    const likeActive = r.my_like ? ' liked' : '';
-    const bmActive = r.my_bookmark ? ' bookmarked' : '';
-
+    // 상단 빵부스러기 제목 변경
+    document.getElementById('breadcrumbTitle').textContent = escapeHtml(r.title);
+    // CSS에 추가하신 새 디자인 클래스(.review-detail-page 등)를 뼈대로 사용합니다.
     area.innerHTML = `
-      <div class="review-detail-card">
-        <div class="rd-head">
-          <h1 class="rd-title">${escapeHtml(r.title)}</h1>
-          <div class="rd-meta">
-            <span class="badge">${escapeHtml(r.author)}</span>
-            <span class="stars">${starHtml(r.rating)}</span>
-            <span>작성일: ${formatDate(r.created_at)}</span>
+      <div class="review-detail-page">
+        
+        <!-- 1. 상단: 아바타와 작성자 정보 -->
+        <div class="rd-profile-head">
+          <img src="./images/mypage.png" class="rd-avatar" alt="프로필">
+          <div class="rd-profile-info">
+            <span class="rd-name">${escapeHtml(r.author)}</span>
+            <span class="rd-stars">${starHtml(r.rating)}</span>
           </div>
         </div>
-        <div class="rd-img">
+        <!-- 2. 중앙: 큰 이미지 영역 -->
+        <div class="rd-image-container">
+          <!-- 첫 번째 이미지 (필수) -->
           <img src="${r.image_url}" alt="${escapeHtml(r.title)}">
+          
+          <!-- 두 번째 이미지 (DB에 image_url2 값이 있을 때만 추가로 출력) -->
+          ${r.image_url2 ? `<img src="${r.image_url2}" alt="${escapeHtml(r.title)} 추가 사진">` : ''}
         </div>
-        <p class="rd-content">${escapeHtml(r.content)}</p>
-        <div class="rd-actions">
-          <button class="icon-btn${likeActive}" id="likeBtn" data-action="like">
-            <span class="ic">♥</span> 좋아요 <span class="cnt">${r.like_count}</span>
-          </button>
-          <button class="icon-btn${bmActive}" id="bmBtn" data-action="bookmark">
-            <span class="ic">☆</span> 북마크 <span class="cnt">${r.bookmark_count}</span>
-          </button>
+        <!-- 3. 하단: 크고 굵은 본문 텍스트 --><div class="rd-text-content">${escapeHtml(r.content)}
         </div>
+        
       </div>
     `;
-
-    bindToggle(document.getElementById('likeBtn'), 'reviews', r.id);
-    bindToggle(document.getElementById('bmBtn'), 'reviews', r.id);
   } catch (err) {
     area.innerHTML = `<p style="color:var(--danger);text-align:center;">${escapeHtml(err.message)}</p>`;
   }

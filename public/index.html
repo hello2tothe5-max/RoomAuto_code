@@ -37,7 +37,7 @@
   <header class="hero">
     <!-- 짧은 인테리어 영상. autoplay + muted + loop로 계속 반복됩니다.
          영상이 로딩되지 않는 환경에서는 포스터 이미지가 천천히 확대됩니다. -->
-    <video autoplay muted loop playsinline poster="/images/hero-poster.svg">
+    <video autoplay muted loop playsinline poster="./images/seed/main_hero.jpeg">
       <source src="./videos/team-video.mp4" type="video/mp4">
     </video>
     <div class="hero-content">
@@ -82,7 +82,7 @@
               <span class="highlight">솔루션</span>을 <span class="highlight">제공합니다.</span>
             </p>
             <div class="text-center" style="text-align:left;">
-              <a href="design.html" class="btn btn-primary fade-up">디자인 시작하기</a>
+              <a href="design.html" class="btn btn-primary fade-up" id="start-design-b">디자인 시작하기</a>
             </div>
           </div>
         </div>
@@ -165,14 +165,11 @@
       <div class="footer-bottom">
         <p>© 2026 RoomAuto(KLHYK). All Right Reserved</p>
       </div>
-
-    </div> <!-- /.footer-inner 닫기 (여기가 진짜 끝부분입니다) -->
+    </div>
   </footer>
   <!-- 로그인 모달 구조 -->
   <div id="login-modal" class="modal-overlay">
     <div class="modal-content">
-      <button id="close-modal-btn" class="close-btn">&times;</button>
-      <!-- iframe을 삭제하고 모달 안에 직접 내용을 작성합니다 -->
       <h1 style="font-size: 24px; color: var(--ink);">안녕하세요</h1>
       <p style="color: var(--primary-mid); font-size: 20px; margin-top: 10px; margin-bottom: 12px;">
         간단한 회원가입으로 인테리어 추천 받기

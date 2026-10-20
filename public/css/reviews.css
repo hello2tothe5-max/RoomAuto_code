@@ -12,10 +12,28 @@
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.review-card-wrap:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(43, 38, 34, 0.12); }
-.review-card { flex: 1; display: flex; flex-direction: column; box-shadow: none; border-radius: 0; }
-.review-card:hover { transform: none; box-shadow: none; }
-.review-card .card-img { aspect-ratio: 4 / 3; }
+
+.review-card-wrap:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(43, 38, 34, 0.12);
+}
+
+.review-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.review-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.review-card .card-img {
+  aspect-ratio: 4 / 3;
+}
 
 .review-head {
   display: flex;
@@ -23,7 +41,13 @@
   align-items: center;
   gap: 10px;
 }
-.stars { color: var(--accent); letter-spacing: 2px; font-size: 15px; }
+
+.stars {
+  color: var(--accent);
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
 .review-excerpt {
   color: var(--muted);
   font-size: 14px;
@@ -40,7 +64,11 @@
   padding: 10px 14px 14px;
   border-top: 1px solid var(--line);
 }
-.review-actions .icon-btn { flex: 1; justify-content: center; }
+
+.review-actions .icon-btn {
+  flex: 1;
+  justify-content: center;
+}
 
 /* ---------- 상세 ---------- */
 .review-detail-card {
@@ -51,8 +79,16 @@
   max-width: 760px;
   margin: 0 auto;
 }
-.review-detail-card .rd-head { margin-bottom: 18px; }
-.review-detail-card .rd-title { font-size: 26px; font-weight: 800; }
+
+.review-detail-card .rd-head {
+  margin-bottom: 18px;
+}
+
+.review-detail-card .rd-title {
+  font-size: 26px;
+  font-weight: 800;
+}
+
 .review-detail-card .rd-meta {
   display: flex;
   gap: 14px;
@@ -62,11 +98,189 @@
   margin-top: 10px;
   font-size: 14px;
 }
+
 .review-detail-card .rd-img {
   border-radius: var(--radius-sm);
   overflow: hidden;
   margin-bottom: 20px;
 }
-.review-detail-card .rd-img img { width: 100%; max-height: 420px; object-fit: cover; }
-.review-detail-card .rd-content { line-height: 2; white-space: pre-line; }
-.review-detail-card .rd-actions { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+
+.review-detail-card .rd-img img {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+}
+
+.review-detail-card .rd-content {
+  line-height: 2;
+  white-space: pre-line;
+}
+
+.review-detail-card .rd-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+/* =========================================
+   리뷰 상세 페이지 (review-detail.html) 전용 스타일
+   ========================================= */
+.review-detail-page {
+  max-width: 1140px;
+  /* 이미지처럼 시원한 레이아웃을 위해 넉넉한 너비 설정 */
+  margin: 0 auto;
+  padding: 40px 20px 100px;
+}
+
+/* 1. 프로필 헤더 */
+.rd-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+/* 프로필 원형 이미지 */
+.rd-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #f5f5f5;
+  border: 1px solid #eaeaea;
+  /* 미세한 테두리 */
+}
+
+/* 이름과 별점을 세로로 묶어주는 컨테이너 */
+.rd-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rd-name {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+  /* RoomAuto 공통 진한 글씨색 활용 */
+}
+
+.rd-stars {
+  font-size: 25px;
+  letter-spacing: 2px;
+  color: var(--primary-mid);
+}
+
+/* 2. 중앙 큼직한 이미지 영역 */
+.rd-image-container {
+  display: flex;
+  flex-direction: column;
+  gap: 160px;
+  /* 이미지가 여러 장일 경우 대비 간격 */
+  /* margin-bottom: 160px; */
+}
+
+.rd-image-container img {
+  width: 100%;
+  max-width: 1100px;
+  height: 850px;
+  border-radius: 0;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+/* 3. 하단 본문 텍스트 (크고 굵은 서체) */
+.rd-text-content {
+  font-size: 32px;
+  /* 폰트를 아주 크게 키움 */
+  font-weight: 800;
+  /* 폰트를 굵게 */
+  line-height: 1.6;
+  /* 줄간격을 넓혀 가독성 향상 */
+  color: var(--primary-mid);
+  /* 룸오토 특유의 남색 포인트 또는 진한 텍스트 */
+  word-break: keep-all;
+  /* 단어가 중간에 끊기지 않고 자연스럽게 줄바꿈되도록 설정 */
+  text-align: left;
+  text-indent: 0;
+  white-space: pre-wrap;
+  /* 사용자가 엔터키로 입력한 줄바꿈(\n)을 그대로 화면에 유지 */
+  margin-top: 160px;
+}
+
+/* ==========================================================
+   리뷰 상세 페이지 모바일/태블릿 반응형 크기 조절 (최종 통합본)
+   ========================================================== */
+
+/* 1. 태블릿 환경 (1200px 이하) */
+@media (max-width: 1200px) {
+
+  /* 프로필 이미지(아바타), 이름, 별점 1차 축소 */
+  .rd-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .rd-name {
+    font-size: 26px !important;
+  }
+
+  .rd-stars {
+    font-size: 20px !important;
+  }
+
+  /* 큼직한 메인 이미지가 짤리지 않고 폰 화면에 쏙 들어오게 조절 */
+  .rd-image-container img {
+    height: auto !important;
+    max-height: 70vh !important;
+    /* 화면 높이의 70% 제한 */
+    object-fit: contain !important;
+  }
+
+  /* 여러 이미지 사이 간격 축소 */
+  .rd-image-container {
+    gap: 80px !important;
+  }
+
+  /* 리뷰 본문 텍스트 및 윗 여백 축소 */
+  .rd-text-content {
+    font-size: 24px !important;
+    margin-top: 80px !important;
+  }
+}
+
+/* 2. 모바일 환경 (900px 이하) */
+@media (max-width: 900px) {
+
+  /* 프로필 이미지(아바타), 이름, 별점 2차 대폭 축소 */
+  .rd-avatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .rd-name {
+    font-size: 20px !important;
+  }
+
+  .rd-stars {
+    font-size: 16px !important;
+  }
+
+  /* 리뷰 본문 텍스트 대폭 축소 */
+  .rd-text-content {
+    font-size: 17px !important;
+    margin-top: 40px !important;
+  }
+
+  /* 여러 이미지 사이 간격 대폭 축소 */
+  .rd-image-container {
+    gap: 40px !important;
+  }
+
+  /* 모바일에서는 세로 높이 제한을 더 줘서 한눈에 보이게 */
+  .rd-image-container img {
+    max-height: 55vh !important;
+  }
+}

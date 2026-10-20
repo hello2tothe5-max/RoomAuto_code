@@ -34,96 +34,62 @@
 
   <!-- ==================== 본문 ==================== -->
   <main class="page-main">
-    <div class="container">
-
-      <!-- 빵 부스러기 -->
-      <nav class="breadcrumb">
-        <a href="index.html">홈</a><span class="sep">›</span>
-        <span>마이 페이지</span>
-      </nav>
-
-      <!-- 프로필 카드 -->
-      <div class="profile-card fade-up" id="profileCard">
-        <div class="loading-box" style="color:#fff;">
-          <div class="spinner"></div>
-        </div>
+    <div id="mypage-main-view">
+      <!-- 빵 부스러기 및 페이지 타이틀 -->
+      <div class="mp-page-header">
+        <nav class="breadcrumb">
+          <a href="index.html">홈</a><span class="sep">›</span>
+          <a href="mypage.html">마이 페이지</a>
+        </nav>
+        <h1 class="mp-main-title">마이페이지</h1>
       </div>
+      <div class="mypage-layout">
 
-      <!-- 탭 -->
-      <div class="mp-tabs fade-up">
-        <button class="mp-tab active" data-panel="history">나의 생성 내역</button>
-        <button class="mp-tab" data-panel="likes">좋아요</button>
-        <button class="mp-tab" data-panel="bookmarks">북마크</button>
-        <button class="mp-tab" data-panel="settings">설정</button>
-      </div>
-
-      <!-- 나의 생성 내역 탭 -->
-      <div class="mp-panel active" id="panel-history">
-        <div class="loading-box">
-          <div class="spinner"></div>
+        <!-- 1. 아바타(프로필) 박스 -->
+        <div class="mp-profile-box">
+          <div class="mp-avatar">
+            <img src="./images/mypage.png" alt="프로필">
+          </div>
+          <h2 class="mp-username" id="displayUsername">유저 이름</h2>
+          <button class="mp-logout-btn" id="mpLogoutBtn">로그아웃</button>
+          <button class="mp-delete-btn" id="deleteBtn">회원 탈퇴</button>
         </div>
-      </div>
-
-      <!-- 좋아요 탭 -->
-      <div class="mp-panel" id="panel-likes">
-        <div class="loading-box">
-          <div class="spinner"></div>
+        <!-- 2. 나의 디자인 카드 -->
+        <div id="mydesigns-card" class="mp-design-card" style="background-image: url('./images/seed/gal_4.jpeg');">
+          <div class="mp-card-overlay">
+            <div class="mp-card-icon"><img src="./images/album.png" alt="아이콘"></div>
+            <h2 class="mp-card-title">나의 디자인</h2>
+          </div>
         </div>
-      </div>
-
-      <!-- 북마크 탭 -->
-      <div class="mp-panel" id="panel-bookmarks">
-        <div class="loading-box">
-          <div class="spinner"></div>
+        <!-- 3. 좋아요 한 디자인 카드 -->
+        <div id="card-likes" class="mp-design-card" style="background-image: url('./images/seed/gal_1.jpeg');">
+          <div class="mp-card-overlay">
+            <div class="mp-card-icon"><img src="./images/album.png" alt="아이콘"></div>
+            <h2 class="mp-card-title">좋아요 한 디자인</h2>
+          </div>
         </div>
-      </div>
-
-      <!-- 설정 탭 -->
-      <div class="mp-panel" id="panel-settings">
-        <div class="settings-card">
-          <h3>회원 정보 수정</h3>
-          <div class="form-field">
-            <label for="editNickname">닉네임</label>
-            <input class="input" id="editNickname" type="text">
+        <!-- 4. 북마크 한 디자인 카드 -->
+        <div id="card-bookmarks" class="mp-design-card" style="background-image: url('./images/seed/gal_2.jpg');">
+          <div class="mp-card-overlay">
+            <div class="mp-card-icon"><img src="./images/album.png" alt="아이콘"></div>
+            <h2 class="mp-card-title">북마크 한 디자인</h2>
           </div>
-          <div class="form-field">
-            <label for="editEmail">이메일</label>
-            <input class="input" id="editEmail" type="email">
-          </div>
-          <p class="form-error" id="editError"></p>
-          <button class="btn btn-primary" id="saveProfileBtn">수정 저장</button>
-        </div>
-
-        <div class="settings-card">
-          <h3>비밀번호 변경</h3>
-          <div class="form-field">
-            <label for="pwCurrent">현재 비밀번호</label>
-            <input class="input" id="pwCurrent" type="password">
-          </div>
-          <div class="form-field">
-            <label for="pwNext">새 비밀번호 (4자리 이상)</label>
-            <input class="input" id="pwNext" type="password">
-          </div>
-          <div class="form-field">
-            <label for="pwNext2">새 비밀번호 확인</label>
-            <input class="input" id="pwNext2" type="password">
-          </div>
-          <p class="form-error" id="pwError"></p>
-          <button class="btn btn-primary" id="changePwBtn">비밀번호 변경</button>
-        </div>
-
-        <div class="danger-zone">
-          <h3>회원 탈퇴</h3>
-          <p>탈퇴하면 좋아요와 북마크 기록이 모두 삭제되고 복구할 수 없어요.</p>
-          <div class="form-field">
-            <label for="delPassword">비밀번호 입력</label>
-            <input class="input" id="delPassword" type="password" placeholder="소셜 로그인 회원은 비워도 돼요">
-          </div>
-          <p class="form-error" id="delError"></p>
-          <button class="btn btn-danger" id="deleteBtn">회원 탈퇴하기</button>
         </div>
       </div>
     </div>
+    <!-- 카드를 클릭하면 나타나는 갤러리 화면 (기본은 숨김 처리) -->
+    <div id="mypage-sub-view" style="display: none; max-width: 1920px; margin: 0 auto; padding: 40px 5vw 120px;">
+      <!-- 상단 빵부스러기 & 제목 -->
+      <div id="sub-view-header">
+        <!-- 자바스크립트로 채워집니다 -->
+      </div>
+      <!-- 2단 갤러리 이미지 그리드 -->
+      <div id="sub-view-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
+        <!-- 자바스크립트로 채워집니다 -->
+      </div>
+    </div>
+
+
   </main>
 
   <!-- ==================== 푸터 ==================== -->
@@ -164,7 +130,17 @@
       </div>
     </div>
   </div>
-
+  <!-- 회원 탈퇴 확인 모달 -->
+  <div id="deleteModalOverlay" class="mp-modal-overlay">
+    <div class="mp-modal-box">
+      <h2 class="mp-modal-title">정말 탈퇴하시겠습니까?</h2>
+      <p class="mp-modal-desc">탈퇴 후에는 정보를 복구하실 수 없습니다.</p>
+      <div class="mp-modal-actions">
+        <button id="btnDeleteYes" class="mp-modal-btn outline">네</button>
+        <button id="btnDeleteNo" class="mp-modal-btn solid">아니오</button>
+      </div>
+    </div>
+  </div>
   <script src="/js/common.js"></script>
   <script src="/js/mypage.js"></script>
 </body>

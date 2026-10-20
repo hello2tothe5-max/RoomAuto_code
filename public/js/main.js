@@ -54,10 +54,6 @@ function buildMarqueeCards(images) {
   return images.map((img) => `
     <a class="marquee-card" href="gallery-detail.html?id=${img.id}">
       <img src="${img.image_url}" alt="${escapeHtml(img.title)}" loading="lazy">
-      <div class="mc-body">
-        <div class="mc-title">${escapeHtml(img.title)}</div>
-        <div class="mc-meta">${escapeHtml(img.room)} · ${escapeHtml(img.style)}</div>
-      </div>
     </a>
   `).join('');
 }
@@ -100,3 +96,43 @@ async function initReviews() {
     stack.innerHTML = '<p style="color:var(--muted);text-align:center;">리뷰를 불러오지 못했어요.</p>';
   }
 }
+
+// ---------------------------------------------------------------
+// 4) 예전 로그인 모달 제어 로직 (헤더 버튼 & 본문 버튼 동시 처리)
+// ---------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+  const loginModal = document.getElementById('login-modal');
+  // 👉 이벤트 위임(Event Delegation)을 사용하여 전체 화면에서 클릭을 감지합니다.
+  document.addEventListener('click', async (e) => {
+
+    // 클릭한 요소가 '디자인 시작' 버튼이거나 '헤더 시작' 버튼인지 확인
+    const targetBtn = e.target.closest('#start-design-b') || e.target.closest('#start-btn');
+
+    // 두 버튼 중 하나라도 클릭되었다면 작동
+    if (targetBtn) {
+      e.preventDefault(); // 기본 이동(href) 멈춤
+      try {
+        // 서버에 로그인 상태 확인
+        const { user } = await api('/auth/me');
+        if (user) {
+          // 로그인 상태라면 디자인 페이지로 이동
+          window.location.href = 'design.html';
+        } else {
+          // 비로그인 상태라면 모달창 띄우기
+          loginModal.style.display = 'flex';
+        }
+      } catch (err) {
+        // 통신 에러나 비로그인 상태 시 모달창 띄우기
+        loginModal.style.display = 'flex';
+      }
+    }
+  });
+  // 모달 영역 밖(어두운 배경) 클릭 시 닫기
+  if (loginModal) {
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        loginModal.style.display = 'none';
+      }
+    });
+  }
+});

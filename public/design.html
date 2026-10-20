@@ -39,12 +39,11 @@
       <!-- 빵 부스러기 -->
       <nav class="breadcrumb">
         <a href="index.html">홈</a><span class="sep">›</span>
-        <span>AI 디자인</span>
+        <span onclick="location.reload();" style="cursor: pointer;">AI 디자인</span>
       </nav>
 
       <div class="page-head fade-up">
         <h1>AI 맞춤 공간 디자인</h1>
-        <p>빈 방 사진 또는 평면도를 올리고 원하는 분위기를 적으면 AI가 바로 만들어 줍니다.</p>
       </div>
       <!-- 교체할 HTML 영역 시작 -->
       <div class="design-wrapper">
@@ -55,7 +54,7 @@
               <img src="./images/image-plus.png" alt="이미지 추가 아이콘"
                 style="width: 48px; height: 48px; object-fit: contain;">
             </div>
-            <div class="up-title">파일을 드래그 하거나<br> 클릭하여 업로드 하세요.<br>최대 10mb 이하의 jpeg,<br> png 첨부가능</div>
+            <div class="up-title">파일을 드래그 하거나<br> 클릭하여 업로드 하세요.<br>최대 10mb 이하의 jpg,<br>jpeg, png 첨부가능</div>
           </div>
           <input type="file" id="fileInput" accept="image/*" hidden>
 
@@ -67,8 +66,16 @@
               <button class="remove-file" id="removeFile" type="button">삭제</button>
             </div>
           </div>
+          <!-- 3. 프롬프트 입력 및 시작 버튼 바 -->
+          <div class="prompt-bar">
+            <input type="text" class="prompt-input" id="prompt" placeholder="예) 9평 원룸, 모던 스타일">
+            <button class="btn btn-primary prompt-submit" id="generateBtn">
+              <img src="./images/ai_star.png" alt="반짝 효과 이미지" class="ai-star" style="width: 24px; height: 24px;"> 디자인 시작
+            </button>
+          </div>
+          <p class="prompt-hint">원하는 분위기 작성하기</p>
           <!-- 2. 예시 필터 칩: 막막할 때 눌러서 조합하세요 -->
-          <div class="chip-label">공간 (눌러서 입력창에 더하기)</div>
+          <div class="chip-label">공간 <span style="font-weight: 300;">(눌러서 입력창에 더해보세요)</span></div>
           <div class="chip-row" id="roomChips">
             <button class="chip" data-text="원룸">원룸</button>
             <button class="chip" data-text="투룸">투룸</button>
@@ -81,18 +88,20 @@
             <button class="chip" data-text="모던">모던</button>
             <button class="chip" data-text="빈티지">빈티지</button>
             <button class="chip" data-text="내추럴">내추럴</button>
+            <!-- <button class="chip" data-text="보테니컬">보테니컬</button>
+            <button class="chip" data-text="그레이">그레이</button>
+            <button class="chip" data-text="유럽풍">유럽풍</button>
+            <button class="chip" data-text="편안함">편안함</button>
+            <button class="chip" data-text="아늑한">아늑한</button>
+            <button class="chip" data-text="화이트">화이트</button>
+            <button class="chip" data-text="우드">우드</button> -->
           </div>
-          <!-- 3. 프롬프트 입력 및 시작 버튼 바 -->
-          <div class="prompt-bar">
-            <input type="text" class="prompt-input" id="prompt" placeholder="예) 9평 원룸, 모던 스타일">
-            <button class="btn btn-primary prompt-submit" id="generateBtn">
-              <img src="./images/ai_star.png" alt="반짝 효과 이미지" class="ai-star" style="width: 24px; height: 24px;"> 디자인 시작
-            </button>
-          </div>
-          <p class="prompt-hint">공간, 스타일 등을 입력해 보세요</p>
           <p class="form-error" id="formError"></p>
+
         </div> <!-- /.design-content 닫힘 (여기서 마법의 상자가 닫힙니다) -->
       </div> <!-- /.design-wrapper 닫힘 -->
+      <!-- ▼ 새롭게 추가: AI 디자인 결과가 출력될 영역 (원페이지 방식) -->
+      <div id="resultArea"></div>
     </div> <!-- /.container 닫힘 -->
   </main>
 

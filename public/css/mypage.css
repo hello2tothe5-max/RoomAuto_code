@@ -1,97 +1,352 @@
 /* ============================================================
-   mypage.css - 마이 페이지 전용 스타일
+   mypage.css - 2단 레이아웃 스타일 (타이틀 포함)
    ============================================================ */
-
-/* ---------- 프로필 카드 ---------- */
-.profile-card {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
-  border-radius: 22px;
-  padding: 34px;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  flex-wrap: wrap;
-  margin-bottom: 26px;
-  box-shadow: var(--shadow);
+/* 상단 빵부스러기 및 타이틀 영역 */
+.mp-page-header {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 40px 140px 0;
 }
-.profile-avatar {
-  width: 84px; height: 84px;
-  border-radius: 50%;
-  background: #fff;
-  color: var(--primary);
-  font-size: 34px;
-  font-weight: 900;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  overflow: hidden;
-}
-.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.profile-info { flex: 1; min-width: 220px; }
-.profile-info .p-nick { font-size: 24px; font-weight: 800; }
-.profile-info .p-email { opacity: 0.85; font-size: 14px; margin-top: 4px; }
-.profile-info .p-meta { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-.profile-info .badge { background: rgba(255,255,255,0.2); color: #fff; }
 
-/* ---------- 마이 페이지 탭 ---------- */
-.mp-tabs {
-  display: flex;
-  gap: 8px;
-  border-bottom: 2px solid var(--line);
+.breadcrumb {
+  font-size: 20px;
+  color: var(--primary-light);
   margin-bottom: 24px;
-  flex-wrap: wrap;
 }
-.mp-tab {
-  border: none;
-  background: none;
-  padding: 12px 20px;
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--muted);
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
+
+.breadcrumb a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
 }
-.mp-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
 
-.mp-panel { display: none; }
-.mp-panel.active { display: block; }
+.breadcrumb .sep {
+  margin: 0 8px;
+  color: var(--border);
+}
 
-.mp-section-title { font-size: 17px; margin: 26px 0 14px; }
-.mp-section-title:first-child { margin-top: 0; }
+.mp-main-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary-mid);
+  margin: 0;
+}
 
-/* 작은 목록 카드 */
-.mp-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 900px) { .mp-list { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .mp-list { grid-template-columns: 1fr; } }
+.mypage-layout {
+  display: grid;
+  grid-template-columns: 600px 600px;
+  gap: 70px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 40px 0 120px;
+}
 
-.mp-item {
-  border-radius: var(--radius-sm);
+/* ================= 프로필 & 디자인 컬럼 ================= */
+
+.mp-profile-box {
+  background: var(--bg);
+  border: 2px solid var(--primary-mid);
+  width: 600px;
+  height: 500px;
+  border-radius: 20px;
+  padding: 40px 20px 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.mp-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   overflow: hidden;
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  background-color: var(--bg);
+  border: 1px solid var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.mp-item img { aspect-ratio: 4 / 3; object-fit: cover; }
-.mp-item .mp-body { padding: 10px 12px; font-size: 13px; font-weight: 700; }
-.mp-item .mp-body .mp-kind { color: var(--muted); font-weight: 600; font-size: 12px; }
 
-/* ---------- 설정 폼 ---------- */
-.settings-card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 28px;
-  max-width: 560px;
-  margin-bottom: 22px;
+.mp-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.settings-card h3 { margin-bottom: 16px; }
-.settings-card .form-field { margin-bottom: 14px; }
 
-.danger-zone {
-  border: 1.5px solid var(--danger);
-  border-radius: var(--radius);
-  padding: 20px;
-  max-width: 560px;
+.mp-username {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary-mid);
+  margin-bottom: 82px;
+  text-align: center;
 }
-.danger-zone h3 { color: var(--danger); margin-bottom: 8px; }
-.danger-zone p { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+
+.mp-logout-btn {
+  width: 350px;
+  height: 40px;
+  padding: 0px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-mid);
+  color: var(--bg);
+  border: none;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-bottom: 30px;
+}
+
+.mp-logout-btn:hover {
+  opacity: 0.85;
+}
+
+.mp-delete-btn {
+  width: 350px;
+  height: 40px;
+  padding: 0px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  color: var(--danger);
+  border: 2px solid var(--danger);
+  border-radius: 999px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ================= 우측 디자인 카드 ================= */
+.mypage-right {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.mp-design-card {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 6/5;
+  height: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mp-design-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+}
+
+.mp-design-card:hover .mp-card-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.mp-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.mp-card-icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mp-card-icon img {
+  width: 36px;
+  height: 36px;
+  filter: brightness(0) invert(1);
+}
+
+/* ============================================================
+   디자인 카드 타이틀 (좋아요한 디자인, 북마크한 디자인, 나의 디자인)
+   ============================================================ */
+.mp-card-title {
+  color: var(--bg);
+  font-size: 32px;
+  font-weight: 800;
+  /* 배경 이미지와 섞이지 않도록 그림자 효과 강화 */
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  letter-spacing: -1px;
+  text-align: center;
+  margin: 0;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+/* 마우스를 올렸을 때 글씨가 살짝 커지는 애니메이션 */
+.mp-design-card:hover .mp-card-title {
+  transform: scale(1.05);
+}
+
+/* ================= 회원 탈퇴 모달 ================= */
+.mp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  /* 반투명 어두운 배경 */
+  backdrop-filter: blur(8px);
+  /* 배경 블러 처리 */
+  -webkit-backdrop-filter: blur(8px);
+  /* Safari 브라우저 호환성 */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.mp-modal-overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mp-modal-box {
+  width: 500px;
+  height: 300px;
+  box-sizing: border-box;
+  background-color: var(--bg);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  min-width: 420px;
+  padding: 80px 100px 60px;
+}
+
+.mp-modal-title {
+  color: var(--primary-mid);
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.mp-modal-desc {
+  color: var(--primary-light);
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 54px;
+  line-height: 1;
+}
+
+.mp-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.mp-modal-btn {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+/* '네' 버튼 (테두리만 있는 스타일) */
+.mp-modal-btn.outline {
+  background-color: transparent;
+  color: var(--primary-mid);
+  border: 1px solid var(--primary-mid);
+}
+
+.mp-modal-btn.outline:hover {
+  background-color: rgba(40, 71, 101, 0.05);
+}
+
+/* '아니오' 버튼 (배경이 칠해진 스타일) */
+.mp-modal-btn.solid {
+  background-color: var(--primary-mid);
+  color: #ffffff;
+  border: none;
+}
+
+.mp-modal-btn.solid:hover {
+  background-color: var(--primary-dark);
+}
+
+/* 반응형 (mypage.css 파일 최하단에 배치 필수!) */
+@media (max-width: 900px) {
+  .mypage-layout {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    /* 레이아웃이 100%를 넘지 않도록 방지 */
+  }
+
+  .mp-page-header {
+    padding: 40px 20px 0;
+  }
+
+  .mp-profile-box {
+    width: 100%;
+    height: auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    /* 패딩이 너비를 초과하여 상자가 튀어나가는 현상 해결 */
+  }
+
+  /* 프로필 박스 내부의 고정 크기 버튼들이 모바일에서 잘리지 않게 유동적으로 변경 */
+  .mp-logout-btn,
+  .mp-delete-btn {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .mp-design-card {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mypage-right {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mp-modal-box {
+    width: 90%;
+    min-width: 0;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+}
