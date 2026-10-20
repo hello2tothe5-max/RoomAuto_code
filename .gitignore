@@ -177,5 +177,5 @@
 
 # RoomAuto runtime data
 /data/
-/uploads/
+#/uploads/
 /public/generated/
